@@ -65,4 +65,44 @@ class PenilaianModel extends Model
 
         return $query->getRowArray(); // Untuk single result atau getResultArray() untuk multiple results
     }
+    public function addNewPenilaian($idAlternatif, $idKriteria, $nilai)
+    {
+        $builder = $this->db->table('penilaian');
+
+        // Mendapatkan tanggal saat ini
+        $tanggalSekarang = date('Y-m-d');
+
+        // Data yang akan dimasukkan ke dalam tabel penilaian
+        $data = [
+            'id_bulan' => date('m', strtotime($tanggalSekarang)), // Mengambil bulan dari tanggal saat ini
+            'id_tahun' => date('Y', strtotime($tanggalSekarang)), // Mengambil tahun dari tanggal saat ini
+            'id_alternatif' => $idAlternatif,
+            'id_kriteria' => $idKriteria,
+            'nilai' => $nilai
+        ];
+
+        // Menambahkan data ke tabel penilaian
+        return $builder->insert($data);
+    }
+    // Di dalam model PenilaianModel
+
+    public function getIdKriteriaByNama($namaKriteria)
+    {
+        // Query untuk mendapatkan ID kriteria berdasarkan nama kriteria
+        $query = $this->db->table('kriteria')
+            ->select('id_kriteria')
+            ->where('kriteria', $namaKriteria)
+            ->get();
+
+        // Memeriksa apakah query mengembalikan hasil
+        if ($query->getNumRows() > 0) {
+            // Mengambil hasil query
+            $result = $query->getRow();
+            // Mengembalikan ID kriteria
+            return $result->id_kriteria;
+        } else {
+            // Kriteria tidak ditemukan, dapat ditangani sesuai kebutuhan
+            return null;
+        }
+    }
 }

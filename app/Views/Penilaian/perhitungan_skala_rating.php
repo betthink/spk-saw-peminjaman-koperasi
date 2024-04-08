@@ -8,7 +8,7 @@
         <span class="text">Kembali</span>
         </a>
     </div>
-    <form action="/penilaian/simpan/<?= $idAlternatif['id_alternatif'] ?>" method="post">
+    <form action="" method="post">
 
         <?= csrf_field() ?>
         <div class="card-body px-5 py-4 mb-2">
@@ -25,7 +25,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Kebiasaan yang baik dalam membayar pinjaman di CU?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="karakternilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="4">Ya</option>
                                         <option value="0">Tidak</option>
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Kebiasaan yang baik dalam membayar pinjaman di tempat lain?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="karakternilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="4">Ya</option>
                                         <option value="0">Tidak</option>
@@ -44,8 +44,8 @@
                         <div class="col-md-12 mb-3">
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-label">Reputasi yang baik dikalangan dunia bisnis dan organisasi lainnya</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <label class="form-label">Reputasi yang baik dikalangan dunia bisnis dan organisasi lainnya?</label>
+                                    <select name="karakternilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Yang bersangkutan adalah orang berpengaruh dimasyarakat?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="karakternilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -64,8 +64,8 @@
                         <div class="col-md-12 mb-3">
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-label">Memiliki tempat tinggal permanen (rumah pribadi)</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <label class="form-label">Memiliki tempat tinggal permanen (rumah pribadi) ?</label>
+                                    <select name="karakternilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="0">Lama < 2 tahun</option>
                                         <option value="1">Lama 3-5 tahun</option>
@@ -73,13 +73,33 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="form-label">Hubungan baik dengan sesama</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <label class="form-label">Hubungan baik dengan Dengan keluarga?</label>
+                                    <select name="karakternilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="1">Dengan keluarga</option>
-                                        <option value="1">Di tempat kerja</option>
-                                        <option value="1">Di masyarakat</option>
-                                        <option value="1">Tidak ada diatas</option>
+                                        <option value="1">Ya</option>
+                                        <option value="0">Tidak</option>
+                                        <option value="1"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label class="form-label">Hubungan baik dengan Di tempat kerja?</label>
+                                    <select name="karakternilai[]" class="form-control" required>
+                                        <option value="#" disabled selected>-- pilih --</option>
+                                        <option value="1">Ya</option>
+                                        <option value="0">Tidak</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label">Hubungan baik dengan Di masyarakat?</label>
+                                    <select name="karakternilai[]" class="form-control" required>
+                                        <option value="#" disabled selected>-- pilih --</option>
+                                        <option value="1">Ya</option>
+                                        <option value="0">Tidak</option>
                                     </select>
                                 </div>
                             </div>
@@ -97,10 +117,9 @@
                     <div class="row mt-3">
                         <div class="col-md-12 mb-3">
                             <div class="row">
-
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah yang bersangkutan memiliki bisnis/gaji yang stabil?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="0">Tidak</option>
                                         <option value="3">Lama < 5 tahun</option>
@@ -109,7 +128,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah tujuan pinjaman yang bersangkutan mampu mendapatkan keuntungan yang bersih?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="10">Ya</option>
                                         <option value="0">Tidak</option>
@@ -121,7 +140,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah bisnis/gaji yang bersangkutan berkembang selama beberapa tahun terakhir?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="5">Ya</option>
                                         <option value="0">Tidak</option>
@@ -129,7 +148,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah pemasukan dari usaha cukup untuk membayar angsuran dan bunga pinjaman?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="20">Ya</option>
                                         <option value="0">Tidak</option>
@@ -140,8 +159,8 @@
                         <div class="col-md-12 mb-3">
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-label">Apakah ROI (Return of Investment=laba atas investasi) bisnis/gaji yang bersangkutan mencukupi untuk membayar pinjaman</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <label class="form-label">Apakah ROI (Return of Investment=laba atas investasi) bisnis/gaji yang bersangkutan mencukupi untuk membayar pinjaman?</label>
+                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="5">Ya</option>
                                         <option value="0">Tidak</option>
@@ -149,7 +168,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah jangka waktu pengembalian pinjaman sesuai dengan jangka waktu hidup bisnis/gaji yang bersangkutan?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="5">Ya</option>
                                         <option value="0">Tidak</option>
@@ -161,10 +180,10 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label class="form-label">Apakah yang bersangkutan masih punya sisa pinjaman di tempat lain?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="5">Ya</option>
                                         <option value="20">Tidak</option>
+                                        <option value="5">Ya</option>
                                     </select>
                                 </div>
 
@@ -186,7 +205,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah barang jaminan yang ditawarkan dapat diubah menjadi uang tunai dengan mudah setiap saat?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="coolateralnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -194,7 +213,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah nilai barang jaminan lebih tinggi daripada jumlah pinjaman yang diajukan dan sesuai kebijakan penilaian barang jaminan?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="coolateralnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -206,7 +225,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah barang jaminannya mudah disita?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="coolateralnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -214,7 +233,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah para penjamin bersedia menjaminkan simpanannya atau bersedia dipotong gajinya apabila yang dijaminnya menunggak?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="coolateralnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -226,7 +245,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah suami/istri yang bersangkutan mengetahui dan menyetujui permohonan pinjaman ini?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="coolateralnilai[]" class="form-control" required>
                                         <option disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -249,10 +268,9 @@
                     <div class="row mt-3">
                         <div class="col-md-12 mb-3">
                             <div class="row">
-
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah yang bersangkutan menabung secara teratur di CU?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="capitalnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1.5">Ya</option>
                                         <option value="0">Tidak</option>
@@ -260,7 +278,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah ada harta pribadi, tabungan dan asset-asset usaha yang dapat dijadikan jaminan pinjaman?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="capitalnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1.5">Ya</option>
                                         <option value="0">Tidak</option>
@@ -270,17 +288,18 @@
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label class="form-label">Apakah barang jaminannya mudah disita?</label>
-                                    <select name="nilai[]" class="form-control" required>
-                                        <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="1">Ya</option>
-                                        <option value="0">Tidak</option>
-                                    </select>
-                                </div>
+
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah asset-asset yang bersangkutan bertambah terus?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="capitalnilai[]" class="form-control" required>
+                                        <option value="#" disabled selected>-- pilih --</option>
+                                        <option value="1">Ya</option>
+                                        <option value="0">Tidak</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label">Apakah kekayaan bersih yang bersangkutan bertambah setiap tahun?</label>
+                                    <select name="capitalnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -288,20 +307,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 mb-3">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label class="form-label">Apakah kekayaan bersih yang bersangkutan bertambah setiap tahun?</label>
-                                    <select name="nilai[]" class="form-control" required>
-                                        <option disabled selected>-- pilih --</option>
-                                        <option value="1">Ya</option>
-                                        <option value="0">Tidak</option>
-                                    </select>
-                                </div>
-
-                            </div>
-                        </div>
-
 
                     </div>
                 </div>
@@ -318,7 +323,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah proyek/bisnis yang bersangkutan ramah lingkungan dan legal?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="creditconditionnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -326,7 +331,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah kondisi cuaca sangat berpengaruh atas proyek/bisnis yang akan didanai dari pinjaman ini?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="creditconditionnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>
@@ -338,7 +343,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah pasar dapat menerima proyek ini?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="creditconditionnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="2">Ya</option>
                                         <option value="0">Tidak</option>
@@ -346,7 +351,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah secara ekonomi masyarakat aktif menjamin kesuksesan proyek/bisnis ini?</label>
-                                    <select name="nilai[]" class="form-control" required>
+                                    <select name="creditconditionnilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="1">Ya</option>
                                         <option value="0">Tidak</option>

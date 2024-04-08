@@ -50,11 +50,17 @@
 
     <div class="pagetitle">
       <h1><?= $title ?></h1>
-      <nav>
+      <nav class="d-flex justify-content-between align-items-center">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
           <li class="breadcrumb-item active"><?= $title ?></li>
         </ol>
+        <?php if (session()->has('message')) : ?>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= session('message') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <?php endif; ?>
       </nav>
     </div><!-- End Page Title -->
 

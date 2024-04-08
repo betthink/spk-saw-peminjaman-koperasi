@@ -6,6 +6,7 @@ use App\Models\PenilaianModel;
 use App\Models\AlternatifModel;
 use App\Models\KriteriaModel;
 use App\Models\SubKriteriaModel;
+use CodeIgniter\HTTP\URI;
 
 class Penilaian extends BaseController
 {
@@ -240,38 +241,121 @@ class Penilaian extends BaseController
             session()->setFlashdata('error', 'Anda harus login terlebih dahulu.');
             return redirect()->to('/login');
         }
+        $previousURL = service('request')->getServer('HTTP_REFERER');
+
+        // Mendapatkan URL default jika tidak ada halaman sebelumnya
+        if (!$previousURL) {
+            $previousURL = site_url('/');
+        }
+        $idAlternatif = $this->alternatif->find($id);
+        if ($this->request->getMethod() == 'post') {
+            $data = [
+                'karakternilai' => $this->request->getPost('karakternilai'),
+                'nilaiCapacitytoPay' => $this->request->getPost('nilaiCapacitytoPay'),
+                'coolateralnilai' => $this->request->getPost('coolateralnilai'),
+                'capitalnilai' => $this->request->getPost('capitalnilai'),
+                'creditconditionnilai' => $this->request->getPost('creditconditionnilai'),
+            ];
+            $total = [];
+
+            // Iterasi melalui setiap array
+            foreach ($data as $key => $values) {
+                // Inisialisasi total untuk array saat ini
+                $arrayTotal = 0;
+
+                // Iterasi melalui nilai-nilai dalam array
+                foreach ($values as $value) {
+                    // Ubah nilai menjadi integer atau float tergantung pada jenis datanya
+                    $numericValue = is_numeric($value) ? $value : (float)$value;
+
+                    // Tambahkan nilai ke total array saat ini
+                    $arrayTotal += $numericValue;
+                }
+                $total[$key] = $arrayTotal;
+            }
+
+            // Cetak total nilai untuk setiap array
+            // dd($total);
+            function klasifikasi_dinamis($nilai, $maksimum, $kategori)
+            {
+                // Menghitung rentang setiap kategori
+                $range = ceil($maksimum / count($kategori));
+                // Menemukan kategori yang sesuai untuk nilai
+                foreach ($kategori as $key => $tingkat) {
+                    $mulai = $key * $range + 1;
+                    $akhir = ($key + 1) * $range;
+                    if ($nilai >= $mulai && $nilai <= $akhir) {
+                        return $tingkat;
+                    }
+                }
+                return 1;
+            }
+            $maksimumkarakter = 15;
+            $maksimumCTP = 70;
+            $maksimumcoolateral = 5;
+            $maksimumcapitalnilai = 5;
+            $maksimumcreditcondition = 5;
+            $kategori = [1, 2, 3, 4, 5];
+            $nilai_skala_rating = [
+                'Character' => klasifikasi_dinamis($total['karakternilai'], $maksimumkarakter, $kategori),
+                'Capacity to Pay' => klasifikasi_dinamis($total['nilaiCapacitytoPay'], $maksimumCTP, $kategori),
+                'Collateral' => klasifikasi_dinamis($total['coolateralnilai'], $maksimumcoolateral, $kategori),
+                'Capital Status' => klasifikasi_dinamis($total['capitalnilai'], $maksimumcapitalnilai, $kategori),
+                'Credit Condition' => klasifikasi_dinamis($total['creditconditionnilai'], $maksimumcreditcondition, $kategori),
+            ];
+          
+            $ModelPenilaian = new PenilaianModel();
+
+            // Looping untuk menyisipkan data nilai
+            $allInsertedSuccessfully = true;
+
+            // Looping untuk menyisipkan data nilai
+            foreach ($nilai_skala_rating as $namaKriteria => $nilai) {
+                // Mendapatkan ID Kriteria berdasarkan nama kriteria
+                $idKriteria = $ModelPenilaian->getIdKriteriaByNama($namaKriteria);
+
+                if ($idKriteria !== null) {
+                    // Menambahkan penilaian ke dalam tabel penilaian menggunakan model
+                    $insertSkalaPenilaian = $ModelPenilaian->addNewPenilaian($idAlternatif['id_alternatif'], $idKriteria, $nilai);
+                    if (!$insertSkalaPenilaian) {
+                        // Jika penyisipan gagal, ubah status menjadi false
+                        $allInsertedSuccessfully = false;
+                        // Tidak perlu melakukan redirect di sini
+                    }
+                } else {
+                    echo "ID Kriteria untuk $namaKriteria tidak ditemukan!";
+                    // Ubah status menjadi false jika ID Kriteria tidak ditemukan
+                    $allInsertedSuccessfully = false;
+                    // Tidak perlu melakukan redirect di sini
+                }
+            }
+
+            // Lakukan redirect setelah selesai looping
+            if ($allInsertedSuccessfully) {
+                // Jika semua penyisipan berhasil, lakukan redirect dengan pesan sukses
+                return redirect()->to('/penilaian')->with(
+                    'message',
+                    'Berhasil menambahkan penilaian'
+                );
+            } else {
+                // Jika ada penyisipan yang gagal, lakukan redirect dengan pesan gagal
+                return redirect()->to(new URI($previousURL))->with(
+                    'message',
+                    'Gagal membuat penilaian'
+                );
+            }
+
+        } else {
+
+            $data = [
+                'title' => 'Tambah skala penilaian',
+                'idAlternatif' => $idAlternatif,
+                'validation' => \Config\Services::validation()
+            ];
+            return view('Penilaian/perhitungan_skala_rating', $data);
+        }
 
         // $ambil data id alternatif
-        $idAlternatif = $this->alternatif->find($id);
-        // dd($idAlternatif);
-        // Dapatkan semua data kriteria
-        // $kriteriaList = $this->kriteria->findAll();
 
-        // // Inisialisasi array untuk menyimpan data subkriteria
-        // $subkriteriaData = [];
-
-        // // Looping data kriteria
-        // foreach ($kriteriaList as $kriteria) {
-
-        //     // Dapatkan data subkriteria berdasarkan ID kriteria
-        //     $subkriteria = $this->subKriteria->where('id_kriteria', $kriteria['id_kriteria'])->findAll();
-
-        //     // Tambahkan data subkriteria ke dalam array
-        //     $subkriteriaData[] = [
-        //         'kriteria' => $kriteria,
-        //         'subkriteria' => $subkriteria,
-        //     ];
-        // }
-
-        $data = [
-            'title' => 'Tambah skala penilaian',
-            'idAlternatif' => $idAlternatif,
-            // 'kriteria' => $kriteriaList,
-            // 'subkriteriaData' => $subkriteriaData,
-            // 'bulan' => $this->request->getVar('bulan'),
-            // 'tahun' => $this->request->getVar('tahun'),
-            'validation' => \Config\Services::validation()
-        ];
-        return view('Penilaian/perhitungan_skala_rating', $data);
     }
 }

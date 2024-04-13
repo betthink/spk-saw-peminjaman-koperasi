@@ -49,17 +49,18 @@ class HitungMetodeModel extends Model
             ->where('id_kriteria', $id_kriteria)
             ->findAll();
     }
-
     public function getDistinctKriteria()
     {
         $builder = $this->db->table('penilaian p');
         $builder->select('p.id_kriteria, p.id_alternatif, k.*');
         $builder->join('kriteria k', 'p.id_kriteria = k.id_kriteria');
-        $builder->groupBy('p.id_kriteria');
+        $builder->groupBy('p.id_kriteria, p.id_alternatif');
         $builder->orderBy('p.id_kriteria', 'ASC');
         $query = $builder->get();
+        // dd($query->getResultArray());
         return $query->getResultArray();
     }
+
 
     public function getDistinctAlternatif()
     {
@@ -86,13 +87,13 @@ class HitungMetodeModel extends Model
     public function getNilaiMaxMin($bulan, $tahun)
     {
         $builder = $this->db->table('penilaian');
-        $builder->select('id_bulan, id_tahun, id_kriteria, MAX(nilai) as nilaiMax, Min(nilai) as nilaiMin');
+        $builder->select('id_bulan, id_tahun, id_kriteria, MAX(nilai) as nilaiMax, MIN(nilai) as nilaiMin');
         $builder->where('id_bulan', $bulan);
         $builder->where('id_tahun', $tahun);
-        $builder->groupBy('id_kriteria');
+        $builder->groupBy('id_kriteria, id_alternatif');
         $builder->orderBy('id_kriteria', 'ASC');
-        $builder->orderBy('id_alternatif', 'ASC');
         $query = $builder->get();
         return $query->getResultArray();
     }
+
 }

@@ -53,6 +53,7 @@ class HitungMetode extends BaseController
         $kriteria = $this->getHitung->getDistinctKriteria();
         $dataPenilaian = $this->getHitung->getAllPenilaian($bulan, $tahun);
         $nilaiMaxMin = $this->getHitung->getNilaiMaxMin($bulan, $tahun);
+        // dd($nilaiMaxMin);
 
         // dd($nilaiMaxMin);
         $nilaiMax = [];

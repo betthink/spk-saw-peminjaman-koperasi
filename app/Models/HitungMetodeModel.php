@@ -52,15 +52,25 @@ class HitungMetodeModel extends Model
     public function getDistinctKriteria()
     {
         $builder = $this->db->table('penilaian p');
-        $builder->select('p.id_kriteria, p.id_alternatif, k.*');
+        $builder->select('p.id_kriteria, k.*'); // Pilih kolom id_kriteria dan kolom dari tabel kriteria saja
         $builder->join('kriteria k', 'p.id_kriteria = k.id_kriteria');
-        $builder->groupBy('p.id_kriteria, p.id_alternatif');
+        $builder->where('p.nilai IS NOT NULL'); // Hanya ambil penilaian yang memiliki nilai
+        $builder->groupBy('p.id_kriteria'); // Kelompokkan hanya berdasarkan id_kriteria
         $builder->orderBy('p.id_kriteria', 'ASC');
         $query = $builder->get();
-        // dd($query->getResultArray());
         return $query->getResultArray();
     }
 
+    // public function getDistinctKriteria()
+    // {
+    //     $builder = $this->db->table('penilaian p');
+    //     $builder->select('p.id_kriteria, p.id_alternatif, k.*');
+    //     $builder->join('kriteria k', 'p.id_kriteria = k.id_kriteria');
+    //     $builder->groupBy('p.id_kriteria');
+    //     $builder->orderBy('p.id_kriteria', 'ASC');
+    //     $query = $builder->get();
+    //     return $query->getResultArray();
+    // }
 
     public function getDistinctAlternatif()
     {

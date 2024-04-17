@@ -51,6 +51,7 @@ class HitungMetode extends BaseController
         }
 
         $kriteria = $this->getHitung->getDistinctKriteria();
+        // dd($kriteria);
         $dataPenilaian = $this->getHitung->getAllPenilaian($bulan, $tahun);
         $nilaiMaxMin = $this->getHitung->getNilaiMaxMin($bulan, $tahun);
         // dd($nilaiMaxMin);
@@ -130,6 +131,7 @@ class HitungMetode extends BaseController
             }
         }
 
-        return redirect()->to('/perhitungan/periode/' . $bln[0] . '/' . $thn[0]);
+        return redirect()->to('/hasil');
+        // return redirect()->to('/perhitungan/periode/' . $bln[0] . '/' . $thn[0]);
     }
 }

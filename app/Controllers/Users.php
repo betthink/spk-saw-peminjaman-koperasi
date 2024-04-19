@@ -26,7 +26,7 @@ class Users extends BaseController
             'title' => 'Data Users',
             'users' => $this->users->findAll()
         ];
-        return view('Users/index', $data);
+        return view('users/index', $data);
     }
 
     public function tambah()
@@ -43,7 +43,7 @@ class Users extends BaseController
             'title' => 'Form Register User',
             'validation' => \Config\Services::validation()
         ];
-        return view('Users/tambah', $data);
+        return view('users/tambah', $data);
     }
 
     public function simpan()

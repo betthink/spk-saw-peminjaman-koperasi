@@ -8,7 +8,7 @@
             <span class="text">Kembali</span>
         </a>
     </div>
-    <form action="/penilaian/update/<?= $idAlternatif['id_alternatif'] ?>" method="post">
+    <form action="<?= site_url('/penilaian/update') ?>/<?= $idAlternatif['id_alternatif'] ?>" method="post">
         <?= csrf_field() ?>
         <div class="card-body px-5 py-4 mb-2">
             <div class="row">

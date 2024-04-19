@@ -26,7 +26,7 @@ class Kriteria extends BaseController
         }
 
         // Kirim data ke view
-        return view('Kriteria/index', [
+        return view('kriteria/index', [
             'title' => 'Data Kriteria',
             'kriteria' => $this->kriteria->findAll(),
         ]);

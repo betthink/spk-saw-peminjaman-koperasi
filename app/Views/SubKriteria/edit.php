@@ -9,7 +9,7 @@
         </a>
     </div>
 
-    <form action="/sub-kriteria/update/<?= $subKriteria['id_sub_kriteria'] ?>" method="post">
+    <form action="<?= base_url('/sub-kriteria/update') ?>/<?= $subKriteria['id_sub_kriteria'] ?>" method="post">
         <?= csrf_field() ?>
         <div class="card-body px-5 py-4 mb-4">
             <div class="row">

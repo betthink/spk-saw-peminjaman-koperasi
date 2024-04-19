@@ -168,7 +168,7 @@
                             <th>Nilai Preferensi</th>
                         </tr>
                     </thead>
-                    <form id="formHasil" method="post" action="/perhitungan/simpan">
+                    <form id="formHasil" method="post" action="<?= base_url('/perhitungan/simpan') ?>">
                         <?= csrf_field() ?>
                         <tbody>
                             <?php $no = 1; ?>

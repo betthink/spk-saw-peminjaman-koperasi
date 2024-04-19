@@ -49,28 +49,17 @@ class HitungMetodeModel extends Model
             ->where('id_kriteria', $id_kriteria)
             ->findAll();
     }
+
     public function getDistinctKriteria()
     {
         $builder = $this->db->table('penilaian p');
-        $builder->select('p.id_kriteria, k.*'); // Pilih kolom id_kriteria dan kolom dari tabel kriteria saja
+        $builder->select('p.id_kriteria, p.id_alternatif, k.*');
         $builder->join('kriteria k', 'p.id_kriteria = k.id_kriteria');
-        $builder->where('p.nilai IS NOT NULL'); // Hanya ambil penilaian yang memiliki nilai
-        $builder->groupBy('p.id_kriteria'); // Kelompokkan hanya berdasarkan id_kriteria
+        $builder->groupBy('p.id_kriteria');
         $builder->orderBy('p.id_kriteria', 'ASC');
         $query = $builder->get();
         return $query->getResultArray();
     }
-
-    // public function getDistinctKriteria()
-    // {
-    //     $builder = $this->db->table('penilaian p');
-    //     $builder->select('p.id_kriteria, p.id_alternatif, k.*');
-    //     $builder->join('kriteria k', 'p.id_kriteria = k.id_kriteria');
-    //     $builder->groupBy('p.id_kriteria');
-    //     $builder->orderBy('p.id_kriteria', 'ASC');
-    //     $query = $builder->get();
-    //     return $query->getResultArray();
-    // }
 
     public function getDistinctAlternatif()
     {
@@ -97,13 +86,13 @@ class HitungMetodeModel extends Model
     public function getNilaiMaxMin($bulan, $tahun)
     {
         $builder = $this->db->table('penilaian');
-        $builder->select('id_bulan, id_tahun, id_kriteria, MAX(nilai) as nilaiMax, MIN(nilai) as nilaiMin');
+        $builder->select('id_bulan, id_tahun, id_kriteria, MAX(nilai) as nilaiMax, Min(nilai) as nilaiMin');
         $builder->where('id_bulan', $bulan);
         $builder->where('id_tahun', $tahun);
-        $builder->groupBy('id_kriteria, id_alternatif');
+        $builder->groupBy('id_kriteria');
         $builder->orderBy('id_kriteria', 'ASC');
+        $builder->orderBy('id_alternatif', 'ASC');
         $query = $builder->get();
         return $query->getResultArray();
     }
-
 }

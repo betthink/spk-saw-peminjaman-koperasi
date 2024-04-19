@@ -6,7 +6,7 @@
         <h6 class="text-muted">Edit Data Nasabah</h6>
     </div>
 
-    <form action="/nasabah/update/<?= $alternatif['id_alternatif'] ?>" method="post" enctype="multipart/form-data">
+    <form action=" <?= base_url('/nasabah/update') ?>/<?= $alternatif['id_alternatif'] ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <div class="card-body px-5 py-4 mb-4">
             <input type="hidden" name="id" value="<?= $alternatif['id_alternatif'] ?>">

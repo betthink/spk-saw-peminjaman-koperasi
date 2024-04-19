@@ -32,12 +32,12 @@
                             <td><?= $row['bobot'] ?></td>
                             <td><?= $row['ada_pilihan'] == 0 ? "Pilih Langsung" : "Input Sub Kriteria" ?></td>
                             <td>
-                                <form action="/kriteria/edit/<?= $row['id_kriteria'] ?>" method="get" class="d-inline">
+                                <form action="<?= base_url('/kriteria/edit') ?>/<?= $row['id_kriteria'] ?>" method="get" class="d-inline">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="_method" value="GET">
                                     <button type="submit" class="btn btn-sm btn-warning">Edit</button>
                                 </form>
-                                <form action="/kriteria/hapus/<?= $row['id_kriteria'] ?>" method="post" class="d-inline">
+                                <form action="<?= base_url('/kriteria/hapus') ?>/<?= $row['id_kriteria'] ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah yakin?')">Hapus</button>

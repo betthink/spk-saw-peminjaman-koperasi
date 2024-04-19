@@ -9,7 +9,7 @@
     <div class="card mt-3 shadow-sm">
         <div class="card-header d-flex justify-content-between">
             <h6 class="text-muted">Data Subkriteria untuk Kriteria "<b><?= ucwords($data['kriteria']['kriteria']) ?></b>"</h6>
-            <form action="/sub-kriteria/tambah/<?= $data['kriteria']['id_kriteria'] ?>" method="get" class="d-inline">
+            <form action="<?= base_url('/sub-kriteria/tambah') ?>/<?= $data['kriteria']['id_kriteria'] ?>" method="get" class="d-inline">
                 <?= csrf_field() ?>
                 <input type="hidden" name="_method" value="GET">
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah</button>
@@ -37,13 +37,13 @@
                                         <td><?= $subkriteriaItem['sub_kriteria'] ?></td>
                                         <td><?= $subkriteriaItem['nilai'] ?></td>
                                         <td>
-                                            <form action="/sub-kriteria/edit/<?= $subkriteriaItem['id_sub_kriteria'] ?>" method="get" class="d-inline">
+                                            <form action="<?= base_url('/sub-kriteria/edit') ?>/<?= $subkriteriaItem['id_sub_kriteria'] ?>" method="get" class="d-inline">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="id_kriteria" value="<?= $subkriteriaItem['id_kriteria'] ?>">
                                                 <input type="hidden" name="_method" value="GET">
                                                 <button type="submit" class="btn btn-sm btn-warning">Edit</button>
                                             </form>
-                                            <form action="/sub-kriteria/hapus/<?= $subkriteriaItem['id_sub_kriteria'] ?>" method="post" class="d-inline">
+                                            <form action="<?= base_url('/sub-kriteria/hapus') ?>/<?= $subkriteriaItem['id_sub_kriteria'] ?>" method="post" class="d-inline">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah yakin?')">Hapus</button>

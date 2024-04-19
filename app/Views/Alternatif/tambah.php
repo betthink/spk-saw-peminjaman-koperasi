@@ -7,7 +7,7 @@
 
     </div>
 
-    <form action="/nasabah/simpan" method="post" enctype="multipart/form-data">
+    <form action="<?= site_url('/nasabah/simpan') ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <div class="card-body px-5 py-4 mb-4">
             <div class="row">

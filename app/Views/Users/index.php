@@ -4,7 +4,7 @@
 <div class="card mt-3 shadow-sm">
     <div class="card-header d-flex justify-content-between">
         <h6 class="text-muted">Data Users</h6>
-        <a href="<?= base_url('/users/tambah') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah</a>
+        <a href="<?= base_url('users/tambah') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah</a>
     </div>
     <div class="card-body m-2">
         <?php if (session()->getFlashdata('pesan')) : ?>

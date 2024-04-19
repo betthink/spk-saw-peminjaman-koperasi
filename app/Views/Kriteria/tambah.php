@@ -7,7 +7,7 @@
 
     </div>
 
-    <form action="/kriteria/simpan" method="post">
+    <form action="<?= base_url('/kriteria/simpan') ?>" method="post">
         <?= csrf_field() ?>
         <div class="card-body px-5 py-4 mb-4">
             <div class="row">

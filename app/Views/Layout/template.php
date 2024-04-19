@@ -41,10 +41,10 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <?= $this->include('Layout/header') ?>
+  <?= $this->include('layout/header') ?>
 
   <!-- ======= sidebar ======= -->
-  <?= $this->include('Layout/sidebar') ?>
+  <?= $this->include('layout/sidebar') ?>
 
   <main id="main" class="main">
 
@@ -69,7 +69,7 @@
   </main><!-- End #main -->
 
   <!-- footer -->
-  <?= $this->include('Layout/footer') ?>
+  <?= $this->include('layout/footer') ?>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

@@ -6,7 +6,7 @@
     <div class="card-header py-3 d-flex justify-content-between">
         <h6 class="m-0 font-weight-bold text-dark"><i class="fa fa-cogs" aria-hidden="true"></i> Pilih Periode</h6>
         <?php if ($bulan != null && $tahun != null) : ?>
-            <a class="btn btn-sm btn-primary align-self-center" href="/hasil/periode/<?= $bulan . '/' . $tahun; ?>">
+            <a class="btn btn-sm btn-primary align-self-center" href="<?= base_url('/hasil/periode') ?>/<?= $bulan . '/' . $tahun; ?>">
                 <i class="fa fa-eye" aria-hidden="true"></i> Lihat Hasil
             </a>
         <?php endif ?>

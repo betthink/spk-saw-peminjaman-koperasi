@@ -248,6 +248,8 @@ class Penilaian extends BaseController
             $previousURL = site_url('/');
         }
         $idAlternatif = $this->alternatif->find($id);
+        $dataAlternatif = $this->alternatif->getDataById($id);
+        // dd($dataAlternatif);
         if ($this->request->getMethod() == 'post') {
             $data = [
                 'karakternilai' => $this->request->getPost('karakternilai'),
@@ -303,7 +305,7 @@ class Penilaian extends BaseController
                 'Capital Status' => klasifikasi_dinamis($total['capitalnilai'], $maksimumcapitalnilai, $kategori),
                 'Credit Condition' => klasifikasi_dinamis($total['creditconditionnilai'], $maksimumcreditcondition, $kategori),
             ];
-          
+
             $ModelPenilaian = new PenilaianModel();
 
             // Looping untuk menyisipkan data nilai
@@ -316,7 +318,7 @@ class Penilaian extends BaseController
 
                 if ($idKriteria !== null) {
                     // Menambahkan penilaian ke dalam tabel penilaian menggunakan model
-                    $insertSkalaPenilaian = $ModelPenilaian->addNewPenilaian($idAlternatif['id_alternatif'], $idKriteria, $nilai);
+                    $insertSkalaPenilaian = $ModelPenilaian->addNewPenilaian($dataAlternatif, $idKriteria, $nilai);
                     if (!$insertSkalaPenilaian) {
                         // Jika penyisipan gagal, ubah status menjadi false
                         $allInsertedSuccessfully = false;
@@ -344,7 +346,6 @@ class Penilaian extends BaseController
                     'Gagal membuat penilaian'
                 );
             }
-
         } else {
 
             $data = [

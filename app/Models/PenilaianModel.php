@@ -65,7 +65,7 @@ class PenilaianModel extends Model
 
         return $query->getRowArray(); // Untuk single result atau getResultArray() untuk multiple results
     }
-    public function addNewPenilaian($idAlternatif, $idKriteria, $nilai)
+    public function addNewPenilaian($dataAlternatif, $idKriteria, $nilai )
     {
         $builder = $this->db->table('penilaian');
 
@@ -74,9 +74,9 @@ class PenilaianModel extends Model
 
         // Data yang akan dimasukkan ke dalam tabel penilaian
         $data = [
-            'id_bulan' => date('m', strtotime($tanggalSekarang)), // Mengambil bulan dari tanggal saat ini
-            'id_tahun' => date('Y', strtotime($tanggalSekarang)), // Mengambil tahun dari tanggal saat ini
-            'id_alternatif' => $idAlternatif,
+            'id_bulan' => $dataAlternatif['id_bulan'] , // Mengambil bulan dari tanggal saat ini
+            'id_tahun' => $dataAlternatif['id_tahun'], // Mengambil tahun dari tanggal saat ini
+            'id_alternatif' => $dataAlternatif['id_alternatif'],
             'id_kriteria' => $idKriteria,
             'nilai' => $nilai
         ];

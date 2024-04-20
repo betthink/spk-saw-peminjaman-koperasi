@@ -62,4 +62,9 @@ class AlternatifModel extends Model
 
         return $query->getResultArray();
     }
+    public function getDataById($id)
+    {
+        // Mengambil data row berdasarkan ID
+        return $this->find($id);
+    }
 }

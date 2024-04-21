@@ -234,8 +234,8 @@ class Alternatif extends BaseController
     public function update($id)
     {
         // Ambil data dari form
-        $bulan = $this->request->getPost('bulan');
-        $tahun = $this->request->getPost('tahun');
+        // $bulan = $this->request->getPost('bulan');
+        // $tahun = $this->request->getPost('tahun');
         $alternatif = $this->request->getPost('alternatif');
         $tglLahir = $this->request->getPost('tglLahir');
         $jnsKelamin = $this->request->getPost('jnsKelamin');
@@ -245,8 +245,8 @@ class Alternatif extends BaseController
         // Validasi data
         // Simpan data ke database
         $data = [
-            'id_bulan' => $bulan,
-            'id_tahun' => $tahun,
+            // 'id_bulan' => $bulan,
+            // 'id_tahun' => $tahun,
             'alternatif' => $alternatif,
             'tgl_lahir' => $tglLahir,
             'jns_kelamin' => $jnsKelamin,
@@ -260,7 +260,7 @@ class Alternatif extends BaseController
             $pesan = 'Data nasabah berhasil diupdate!';
             session()->setFlashdata('pesan', $pesan);
             // Redirect ke halaman daftar nasabah
-            return redirect()->to('/nasabah/periode/' . $bulan . '/' . $tahun);
+            return redirect()->to('/nasabah');
         } else {
             // Jika gagal, set pesan gagal
             $pesan = 'Gagal mengubah data nasabah!';

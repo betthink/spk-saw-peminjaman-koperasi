@@ -71,7 +71,7 @@
                                 <td><?= $row['jns_kelamin'] == "l" ? "Laki-laki" : "Perempuan" ?></td>
                                 <td><?= $row['no_telp'] ?></td>
                                 <td class="<?= $_SESSION['role'] == 1 ? '' : 'd-none' ?>">
-                                    <form action="/nasabah/edit/<?= $row['id_alternatif'] ?>" method="get" class="d-inline">
+                                    <form action="<?= base_url('/nasabah/edit') ?>/<?= $row['id_alternatif'] ?>" method="get" class="d-inline">
                                         <?= csrf_field() ?>
                                         <input type="hidden" name="bulan" value="<?= $bulan ?>">
                                         <input type="hidden" name="tahun" value="<?= $tahun ?>">

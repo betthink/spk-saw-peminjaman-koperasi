@@ -47,7 +47,7 @@
             <?php ($title == "<?= base_url('/Penilaian') ?>" || $title == "Perhitungan" || $title == "Data Hasil") ? $show = "show" : $show = ""; ?>
             <ul id="alternatif-nav" class="nav-content collapse <?= $show ?>" data-bs-parent="#sidebar-nav">
                 <li class="<?= $_SESSION['role'] == 1 ? '' : 'd-none' ?>">
-                    <a href="penilaian" class="<?= $title == "Penilaian" ? "active" : '' ?>">
+                    <a href="<?= base_url('/penilaian') ?>" class="<?= $title == "Penilaian" ? "active" : '' ?>">
                         <i class="bi bi-circle"></i><span>Penilaian</span>
                     </a>
                 </li>

@@ -10,25 +10,7 @@
         <?= csrf_field() ?>
         <div class="card-body px-5 py-4 mb-4">
             <input type="hidden" name="id" value="<?= $alternatif['id_alternatif'] ?>">
-            <div class="row">
-                <div class="form-group col-md-6 mt-2">
-                    <label class="form-label">Periode Bulan</label>
-                    <select class="form-control" name="bulan">
-                        <?php foreach ($dataBulan as $key => $bulan) : ?>
-                            <option value="<?= $key + 1 ?>" <?= ($key + 1) == $alternatif['id_bulan'] ? 'selected' : '' ?>><?= $bulan ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="form-group col-md-6 mt-2">
-                    <label class="form-label">Periode Tahun</label>
-                    <select class="form-control" name="tahun">
-                        <option value="#" disabled selected>-- Pilih Tahun --</option>
-                        <?php foreach ($dataTahun as $key => $tahun) : ?>
-                            <option value="<?= 2 . $key + 2 ?>" <?= (2 . $key + 2) == $alternatif['id_tahun'] ? 'selected' : '' ?>><?= $tahun ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-            </div>
+           
             <div class="row mt-4">
                 <div class="form-group col-md-6 mt-2">
                     <label class="form-label">Nama Nasabah</label>

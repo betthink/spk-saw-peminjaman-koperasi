@@ -67,4 +67,19 @@ class AlternatifModel extends Model
         // Mengambil data row berdasarkan ID
         return $this->find($id);
     }
+    // update
+    public function updateData($id, $data)
+    {
+        // Jalankan query update
+        $this->where('id_alternatif', $id)
+        ->set($data)
+        ->update();
+
+        // Cek apakah data berhasil diupdate
+        if ($this->affectedRows() > 0) {
+            return true; // Return true jika berhasil diupdate
+        } else {
+            return false; // Return false jika tidak berhasil diupdate
+        }
+    }
 }

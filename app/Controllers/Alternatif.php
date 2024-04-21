@@ -101,7 +101,7 @@ class Alternatif extends BaseController
 
         // proses upload gambar
         // $dataFile = $this->request->getFile('berkas');
-      
+
         // if ($dataFile->getName() == "") {
         //     $fileName = "";
         // } else {
@@ -125,7 +125,7 @@ class Alternatif extends BaseController
 
         // session()->setFlashdata('pesan', $isipesan);
 
-    $data =    $this->alternatif->save([
+        $data =    $this->alternatif->save([
             'id_bulan' => $bulan,
             'id_tahun' => $tahun,
             'alternatif' => $this->request->getVar('alternatif'),
@@ -163,73 +163,112 @@ class Alternatif extends BaseController
         return view('/alternatif/edit', $data);
     }
 
+    // public function update($id)
+    // {
+    //     // validasi input
+    //     if (!$this->validate([
+    //         'alternatif' => [
+    //             // 'rules' => 'required|is_unique[alternatif.alternatif]',
+    //             'errors' => [
+    //                 'required' => 'nama {field} harus diisi!',
+    //                 // 'is_unique' => 'alternatif {field} sudah ada!'
+    //             ]
+    //         ]
+    //     ])) {
+    //         $validation = \Config\Services::validation();
+    //         return redirect()->to('/nasabah/edit/' . $id)->withInput()->with('validation', $validation);
+    //     }
+
+    //     $bulan = $this->request->getVar('bulan');
+    //     $tahun = $this->request->getVar('tahun');
+
+    //     // untuk proses edit gambar data yg dikirm di cek terlebih dahulu apakah ada data gambar baru jika ya lakukan update jika tidak ada maka tidaka ada update gambar
+    //     $dataFile = $this->request->getFile('berkas');
+    //     if ($dataFile->getName() == "") {
+    //         $this->alternatif->save([
+    //             'id_alternatif' => $id,
+    //             'id_bulan' =>  $bulan,
+    //             'id_tahun' =>  $tahun,
+    //             'alternatif' => $this->request->getVar('alternatif'),
+    //             'tgl_lahir' => $this->request->getVar('tglLahir'),
+    //             'alamat' => $this->request->getVar('alamat'),
+    //             'jns_kelamin' => $this->request->getVar('jnsKelamin'),
+    //             'no_telp' => $this->request->getVar('noTelp'),
+    //         ]);
+    //     } else {
+    //         $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'xlsx', 'xls']; // Daftar ekstensi yang diperbolehkan
+    //         $fileName = $dataFile->getRandomName();
+    //         $fileSize = $dataFile->getSize();
+    //         $fileExtension = $dataFile->getExtension();
+    //         // filter jika file nya lebih dari 2mb
+    //         // ukuran file dalam bytes karena 1KB = 1024 bytes, sehingga 2MB = 2048 * 1024 
+    //         // filter jika file nya lebih dari 2MB atau ekstensi tidak diperbolehkan
+    //         if ($fileSize > 2048 * 1024) { // Periksa ukuran file dalam bytes (2MB)
+    //             $isipesan = '<script> alert("File terlalu besar!") </script>';
+    //         } elseif (!in_array($fileExtension, $allowedExtensions)) { // Periksa ekstensi file
+    //             $isipesan = '<script> alert("Format file tidak diperbolehkan. Hanya file dengan ekstensi jpg, jpeg, png, pdf, xlsx, dan xls yang diperbolehkan.!") </script>';
+    //         } else {
+    //             // Jika file lolos pengecekan ukuran dan ekstensi, lanjutkan proses upload
+    //             $dataFile->move('berkas-nasabah', $fileName);
+    //             $isipesan = '<script> alert("File berhasil di-upload!") </script>';
+    //         }
+    //         $this->alternatif->save([
+    //             'id_alternatif' => $id,
+    //             'id_bulan' =>  $bulan,
+    //             'id_tahun' =>  $tahun,
+    //             'alternatif' => $this->request->getVar('alternatif'),
+    //             'tgl_lahir' => $this->request->getVar('tglLahir'),
+    //             'alamat' => $this->request->getVar('alamat'),
+    //             'jns_kelamin' => $this->request->getVar('jnsKelamin'),
+    //             'no_telp' => $this->request->getVar('noTelp'),
+    //             'file' => $fileName,
+    //         ]);
+    //     }
+
+    //     // pesan data berhasil ditambah
+    //     $isipesan = '<script> alert("Nasabah berhasil diupdate!") </script>';
+    //     session()->setFlashdata('pesan', $isipesan);
+
+    //     return redirect()->to('/nasabah/periode/' . $bulan . '/' . $tahun);
+    // }
     public function update($id)
     {
-        // validasi input
-        if (!$this->validate([
-            'alternatif' => [
-                // 'rules' => 'required|is_unique[alternatif.alternatif]',
-                'errors' => [
-                    'required' => 'nama {field} harus diisi!',
-                    // 'is_unique' => 'alternatif {field} sudah ada!'
-                ]
-            ]
-        ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->to('/nasabah/edit/' . $id)->withInput()->with('validation', $validation);
-        }
+        // Ambil data dari form
+        $bulan = $this->request->getPost('bulan');
+        $tahun = $this->request->getPost('tahun');
+        $alternatif = $this->request->getPost('alternatif');
+        $tglLahir = $this->request->getPost('tglLahir');
+        $jnsKelamin = $this->request->getPost('jnsKelamin');
+        $noTelp = $this->request->getPost('noTelp');
+        $alamat = $this->request->getPost('alamat');
 
-        $bulan = $this->request->getVar('bulan');
-        $tahun = $this->request->getVar('tahun');
-
-        // untuk proses edit gambar data yg dikirm di cek terlebih dahulu apakah ada data gambar baru jika ya lakukan update jika tidak ada maka tidaka ada update gambar
-        $dataFile = $this->request->getFile('berkas');
-        if ($dataFile->getName() == "") {
-            $this->alternatif->save([
-                'id_alternatif' => $id,
-                'id_bulan' =>  $bulan,
-                'id_tahun' =>  $tahun,
-                'alternatif' => $this->request->getVar('alternatif'),
-                'tgl_lahir' => $this->request->getVar('tglLahir'),
-                'alamat' => $this->request->getVar('alamat'),
-                'jns_kelamin' => $this->request->getVar('jnsKelamin'),
-                'no_telp' => $this->request->getVar('noTelp'),
-            ]);
+        // Validasi data
+        // Simpan data ke database
+        $data = [
+            'id_bulan' => $bulan,
+            'id_tahun' => $tahun,
+            'alternatif' => $alternatif,
+            'tgl_lahir' => $tglLahir,
+            'jns_kelamin' => $jnsKelamin,
+            'no_telp' => $noTelp,
+            'alamat' => $alamat,
+        ];
+        // dd($data);
+        $isSuccess = $this->alternatif->updateData($id, $data);
+        if ($isSuccess) {
+            // Set pesan sukses
+            $pesan = 'Data nasabah berhasil diupdate!';
+            session()->setFlashdata('pesan', $pesan);
+            // Redirect ke halaman daftar nasabah
+            return redirect()->to('/nasabah/periode/' . $bulan . '/' . $tahun);
         } else {
-            $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'xlsx', 'xls']; // Daftar ekstensi yang diperbolehkan
-            $fileName = $dataFile->getRandomName();
-            $fileSize = $dataFile->getSize();
-            $fileExtension = $dataFile->getExtension();
-            // filter jika file nya lebih dari 2mb
-            // ukuran file dalam bytes karena 1KB = 1024 bytes, sehingga 2MB = 2048 * 1024 
-            // filter jika file nya lebih dari 2MB atau ekstensi tidak diperbolehkan
-            if ($fileSize > 2048 * 1024) { // Periksa ukuran file dalam bytes (2MB)
-                $isipesan = '<script> alert("File terlalu besar!") </script>';
-            } elseif (!in_array($fileExtension, $allowedExtensions)) { // Periksa ekstensi file
-                $isipesan = '<script> alert("Format file tidak diperbolehkan. Hanya file dengan ekstensi jpg, jpeg, png, pdf, xlsx, dan xls yang diperbolehkan.!") </script>';
-            } else {
-                // Jika file lolos pengecekan ukuran dan ekstensi, lanjutkan proses upload
-                $dataFile->move('berkas-nasabah', $fileName);
-                $isipesan = '<script> alert("File berhasil di-upload!") </script>';
-            }
-            $this->alternatif->save([
-                'id_alternatif' => $id,
-                'id_bulan' =>  $bulan,
-                'id_tahun' =>  $tahun,
-                'alternatif' => $this->request->getVar('alternatif'),
-                'tgl_lahir' => $this->request->getVar('tglLahir'),
-                'alamat' => $this->request->getVar('alamat'),
-                'jns_kelamin' => $this->request->getVar('jnsKelamin'),
-                'no_telp' => $this->request->getVar('noTelp'),
-                'file' => $fileName,
-            ]);
+            // Jika gagal, set pesan gagal
+            $pesan = 'Gagal mengubah data nasabah!';
+            session()->setFlashdata('pesan', $pesan);
+            // Redirect ke halaman itu sendiri
+            return redirect()->back()->withInput();
         }
 
-        // pesan data berhasil ditambah
-        $isipesan = '<script> alert("Nasabah berhasil diupdate!") </script>';
-        session()->setFlashdata('pesan', $isipesan);
-
-        return redirect()->to('/nasabah/periode/' . $bulan . '/' . $tahun);
     }
 
     public function delete($id)

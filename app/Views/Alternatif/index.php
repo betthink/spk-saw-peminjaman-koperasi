@@ -78,11 +78,11 @@
                                         <input type="hidden" name="_method" value="GET">
                                         <button type="submit" class="btn btn-sm btn-warning">Edit</button>
                                     </form>
-                                    <form action="/nasabah/hapus/<?= $row['id_alternatif'] ?>" method="post" class="d-inline">
+                                    <!-- <form action="/nasabah/hapus/<?= $row['id_alternatif'] ?>" method="post" class="d-inline">
                                         <?= csrf_field() ?>
                                         <input type="hidden" name="_method" value="DELETE">
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah yakin?')">Hapus</button>
-                                    </form>
+                                    </form> -->
                                 </td>
                             </tr>
                         <?php endforeach ?>

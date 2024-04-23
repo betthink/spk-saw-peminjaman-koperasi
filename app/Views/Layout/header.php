@@ -43,7 +43,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="profile-user/<?= $_SESSION['id_user'] ?>">
+                        <a class="dropdown-item d-flex align-items-center" href="<?= base_url('/profile-user') ?>">
                             <i class="bi bi-person"></i>
                             <span>My Profile</span>
                         </a>
@@ -73,7 +73,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="<?= site_url('/logout') ?>">
+                        <a class="dropdown-item d-flex align-items-center" href="<?= base_url('/logout') ?>">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Sign Out</span>
                         </a>

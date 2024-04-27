@@ -105,4 +105,22 @@ class PenilaianModel extends Model
             return null;
         }
     }
+
+    public function updatePenilaian($idPenilaian, $nilai)
+    {
+        // Data yang akan diperbarui
+        $data = [
+            'nilai' => $nilai
+        ];
+
+        // Lakukan pembaruan data berdasarkan id penilaian
+        $this->db->table('penilaian')
+        ->where('id_penilaian', $idPenilaian)
+            ->update($data);
+
+        // Periksa apakah pembaruan berhasil
+        return $this->db->affectedRows() > 0;
+    }
+
 }
+

@@ -66,6 +66,8 @@ $routes->delete('/alternatif/hapus/(:num)', 'Alternatif::delete/$1');
 // skala rating
 $routes->get('/penilaian/skala-rating/(:any)', 'Penilaian::penentuan_skala_rating/$1');
 $routes->post('/penilaian/skala-rating/(:any)', 'Penilaian::penentuan_skala_rating/$1');
+$routes->get('/skala-rating/edit/(:any)', 'Penilaian::edit_skala/$1');
+$routes->post('/skala-rating/edit/(:any)', 'Penilaian::updateSkalaPenilaian/$1');
 
 // perhitungan
 $routes->get('/perhitungan', 'HitungMetode::index');

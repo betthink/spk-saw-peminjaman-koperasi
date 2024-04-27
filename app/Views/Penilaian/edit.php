@@ -4,9 +4,14 @@
 <div class="card mt-3 shadow-sm">
     <div class="card-header d-sm-flex align-items-center justify-content-between">
         <h6 class="text-muted">Edit Penilaian Untuk Alternatif <?= $idAlternatif['alternatif'] ?></h6>
-        <a href="<?= base_url('/penilaian/periode/') . $bulan . '/' . $tahun ?>" class="btn btn-secondary btn-sm"></span>
-            <span class="text">Kembali</span>
-        </a>
+        <div>
+            <a href="<?= base_url('/penilaian/periode/') . $bulan . '/' . $tahun ?>" class="btn btn-secondary btn-sm"></span>
+                <span class="text">Kembali</span>
+            </a>
+            <a href="<?= base_url('/skala-rating/edit/') . $idAlternatif['id_alternatif']?>" class="btn btn-primary btn-sm"></span>
+                <span class="text">edit questioner</span>
+            </a>
+        </div>
     </div>
     <form action="<?= site_url('/penilaian/update') ?>/<?= $idAlternatif['id_alternatif'] ?>" method="post">
         <?= csrf_field() ?>

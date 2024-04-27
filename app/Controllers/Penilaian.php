@@ -6,6 +6,7 @@ use App\Models\PenilaianModel;
 use App\Models\AlternatifModel;
 use App\Models\KriteriaModel;
 use App\Models\SubKriteriaModel;
+use App\Models\SkalaPenilaianModel;
 use CodeIgniter\HTTP\URI;
 
 class Penilaian extends BaseController
@@ -13,6 +14,7 @@ class Penilaian extends BaseController
     protected $penilaian;
     protected $alternatif;
     protected $kriteria;
+    protected $SkalaPenilaianM;
     protected $subKriteria;
     protected $dataBulan;
     protected $dataTahun;
@@ -23,6 +25,7 @@ class Penilaian extends BaseController
         $this->alternatif = new AlternatifModel();
         $this->kriteria = new KriteriaModel();
         $this->subKriteria = new SubKriteriaModel();
+        $this->SkalaPenilaianM = new SkalaPenilaianModel();
 
         // membuat bulan untuk keperluan periode
         $this->dataBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -213,8 +216,6 @@ class Penilaian extends BaseController
                 $validation = \Config\Services::validation();
                 return redirect()->to('/penilaian/edit/' . $id)->withInput()->with('validation', $validation);
             }
-
-
             // Menyimpan setiap entry
             $this->penilaian->save([
                 'id_bulan' => $id_bulan,
@@ -258,8 +259,165 @@ class Penilaian extends BaseController
                 'capitalnilai' => $this->request->getPost('capitalnilai'),
                 'creditconditionnilai' => $this->request->getPost('creditconditionnilai'),
             ];
-            $total = [];
+            // disini insert 
+            // $ModelSkalaPenilaian = new SkalaPenilaianModel();
+            $insertSkala =   $this->SkalaPenilaianM->insertDataSkala($idAlternatif['id_alternatif'], $data);
 
+            if ($insertSkala) {
+                $total = [];
+                // Iterasi melalui setiap array
+                foreach ($data as $key => $values) {
+                    // Inisialisasi total untuk array saat ini
+                    $arrayTotal = 0;
+
+                    // Iterasi melalui nilai-nilai dalam array
+                    foreach ($values as $value) {
+                        // Ubah nilai menjadi integer atau float tergantung pada jenis datanya
+                        $numericValue = is_numeric($value) ? $value : (float)$value;
+
+                        // Tambahkan nilai ke total array saat ini
+                        $arrayTotal += $numericValue;
+                    }
+                    $total[$key] = $arrayTotal;
+                }
+
+                // Cetak total nilai untuk setiap array
+                // dd($total);
+                function klasifikasi_dinamis($nilai, $maksimum, $kategori)
+                {
+                    // Menghitung rentang setiap kategori
+                    $range = ceil($maksimum / count($kategori));
+                    // Menemukan kategori yang sesuai untuk nilai
+                    foreach ($kategori as $key => $tingkat) {
+                        $mulai = $key * $range + 1;
+                        $akhir = ($key + 1) * $range;
+                        if ($nilai >= $mulai && $nilai <= $akhir) {
+                            return $tingkat;
+                        }
+                    }
+                    return 1;
+                }
+                $maksimumkarakter = 15;
+                $maksimumCTP = 70;
+                $maksimumcoolateral = 5;
+                $maksimumcapitalnilai = 5;
+                $maksimumcreditcondition = 5;
+                $kategori = [1, 2, 3, 4, 5];
+                $nilai_skala_rating = [
+                    'Character' => klasifikasi_dinamis($total['karakternilai'], $maksimumkarakter, $kategori),
+                    'Capacity to Pay' => klasifikasi_dinamis($total['nilaiCapacitytoPay'], $maksimumCTP, $kategori),
+                    'Collateral' => klasifikasi_dinamis($total['coolateralnilai'], $maksimumcoolateral, $kategori),
+                    'Capital Status' => klasifikasi_dinamis($total['capitalnilai'], $maksimumcapitalnilai, $kategori),
+                    'Credit Condition' => klasifikasi_dinamis($total['creditconditionnilai'], $maksimumcreditcondition, $kategori),
+                ];
+
+                $ModelPenilaian = new PenilaianModel();
+
+                // Looping untuk menyisipkan data nilai
+                $allInsertedSuccessfully = true;
+
+                // Looping untuk menyisipkan data nilai
+                foreach ($nilai_skala_rating as $namaKriteria => $nilai) {
+                    // Mendapatkan ID Kriteria berdasarkan nama kriteria
+                    $idKriteria = $ModelPenilaian->getIdKriteriaByNama($namaKriteria);
+
+                    if ($idKriteria !== null) {
+                        // Menambahkan penilaian ke dalam tabel penilaian menggunakan model
+                        $insertSkalaPenilaian = $ModelPenilaian->addNewPenilaian($dataAlternatif, $idKriteria, $nilai);
+                        if (!$insertSkalaPenilaian) {
+                            // Jika penyisipan gagal, ubah status menjadi false
+                            $allInsertedSuccessfully = false;
+                            // Tidak perlu melakukan redirect di sini
+                        }
+                    } else {
+                        echo "ID Kriteria untuk $namaKriteria tidak ditemukan!";
+                        // Ubah status menjadi false jika ID Kriteria tidak ditemukan
+                        $allInsertedSuccessfully = false;
+                        // Tidak perlu melakukan redirect di sini
+                    }
+                }
+
+                // Lakukan redirect setelah selesai looping
+                if ($allInsertedSuccessfully) {
+                    // Jika semua penyisipan berhasil, lakukan redirect dengan pesan sukses
+                    return redirect()->to('/penilaian')->with(
+                        'message',
+                        'Berhasil menambahkan penilaian'
+                    );
+                } else {
+                    // Jika ada penyisipan yang gagal, lakukan redirect dengan pesan gagal
+                    return redirect()->to(new URI($previousURL))->with(
+                        'message',
+                        'Gagal membuat penilaian'
+                    );
+                }
+            }
+        } else {
+
+            $data = [
+                'title' => 'Tambah skala penilaian',
+                'idAlternatif' => $idAlternatif,
+                'validation' => \Config\Services::validation()
+            ];
+            return view('Penilaian/perhitungan_skala_rating', $data);
+        }
+
+        // $ambil data id alternatif
+
+    }
+    public function edit_skala($id)
+    {
+        // Pengecekan session login
+        if (session()->get('login') != "login") {
+            // Jika tidak ada session 'login', redirect ke halaman login dengan pesan error
+            session()->setFlashdata('error', 'Anda harus login terlebih dahulu.');
+            return redirect()->to('/login');
+        }
+
+        if ($this->request->getMethod() == 'get') {
+            $idAlternatif = $this->alternatif->find($id);
+            $data = $this->SkalaPenilaianM->getDataByIdUser($id);
+            // dd($data);die;
+            $data = [
+                'title' => 'Edit skala penilaian',
+                'idAlternatif' => $idAlternatif,
+                'dataSkala' => $data,
+                'validation' => \Config\Services::validation()
+            ];
+            return view('Penilaian/edit_skala', $data);
+        }
+    }
+    public function updateSkalaPenilaian($id)
+    {
+        // Mengambil data dari form (contoh saja)
+        $postData = $this->request->getPost();
+        unset($postData['csrf_test_name']);
+        unset($postData['submit']);
+        // dd($postData);
+
+        // Memanggil metode updateDataSkala untuk memperbarui data skala penilaian
+        if ($this->SkalaPenilaianM->updateDataSkala($postData)) {
+            // Jika berhasil diperbarui, lakukan sesuatu, seperti redirect atau tampilkan pesan sukses
+            $previousURL = service('request')->getServer('HTTP_REFERER');
+
+            // Mendapatkan URL default jika tidak ada halaman sebelumnya
+            if (!$previousURL) {
+                $previousURL = site_url('/');
+            }
+            $dataAlternatif = $this->alternatif->getDataById($id);
+
+            // input ke penilaian
+            $data = [
+                'karakternilai' => $this->request->getPost('karakternilai'),
+                'nilaiCapacitytoPay' => $this->request->getPost('nilaiCapacitytoPay'),
+                'coolateralnilai' => $this->request->getPost('coolateralnilai'),
+                'capitalnilai' => $this->request->getPost('capitalnilai'),
+                'creditconditionnilai' => $this->request->getPost('creditconditionnilai'),
+            ];
+            // disini insert 
+            // $ModelSkalaPenilaian = new SkalaPenilaianModel();
+
+            $total = [];
             // Iterasi melalui setiap array
             foreach ($data as $key => $values) {
                 // Inisialisasi total untuk array saat ini
@@ -306,57 +464,48 @@ class Penilaian extends BaseController
                 'Credit Condition' => klasifikasi_dinamis($total['creditconditionnilai'], $maksimumcreditcondition, $kategori),
             ];
 
-            $ModelPenilaian = new PenilaianModel();
 
             // Looping untuk menyisipkan data nilai
             $allInsertedSuccessfully = true;
-
+            $getPenilaian = $this->penilaian->where('id_alternatif', $dataAlternatif['id_alternatif'])->findAll();
+            // var_dump($nilai_skala_rating);die;
             // Looping untuk menyisipkan data nilai
             foreach ($nilai_skala_rating as $namaKriteria => $nilai) {
                 // Mendapatkan ID Kriteria berdasarkan nama kriteria
-                $idKriteria = $ModelPenilaian->getIdKriteriaByNama($namaKriteria);
+                $idKriteria = $this->penilaian->getIdKriteriaByNama($namaKriteria);
 
                 if ($idKriteria !== null) {
-                    // Menambahkan penilaian ke dalam tabel penilaian menggunakan model
-                    $insertSkalaPenilaian = $ModelPenilaian->addNewPenilaian($dataAlternatif, $idKriteria, $nilai);
-                    if (!$insertSkalaPenilaian) {
-                        // Jika penyisipan gagal, ubah status menjadi false
-                        $allInsertedSuccessfully = false;
-                        // Tidak perlu melakukan redirect di sini
+                    // Memperbarui penilaian menggunakan model
+                    foreach ($getPenilaian as $penilaian) {
+                        if ($penilaian['id_kriteria'] == $idKriteria) {
+                            // Lakukan pembaruan nilai
+                            $updateSkalaPenilaian = $this->penilaian->updatePenilaian($penilaian['id_penilaian'], $nilai);
+                            if (!$updateSkalaPenilaian) {
+                                // Jika pembaruan gagal, ubah status menjadi false
+                                $allUpdatedSuccessfully = false;
+                            }
+                            break; // Keluar dari loop setelah pembaruan berhasil dilakukan
+                        }
                     }
                 } else {
                     echo "ID Kriteria untuk $namaKriteria tidak ditemukan!";
                     // Ubah status menjadi false jika ID Kriteria tidak ditemukan
-                    $allInsertedSuccessfully = false;
-                    // Tidak perlu melakukan redirect di sini
+                    $allUpdatedSuccessfully = false;
                 }
             }
 
+
             // Lakukan redirect setelah selesai looping
-            if ($allInsertedSuccessfully) {
-                // Jika semua penyisipan berhasil, lakukan redirect dengan pesan sukses
-                return redirect()->to('/penilaian')->with(
-                    'message',
-                    'Berhasil menambahkan penilaian'
-                );
+            if ($allUpdatedSuccessfully) {
+                // Redirect ke halaman penilaian
+                return redirect()->to('/penilaian')->with('success', 'Pembaruan penilaian berhasil.');
             } else {
-                // Jika ada penyisipan yang gagal, lakukan redirect dengan pesan gagal
-                return redirect()->to(new URI($previousURL))->with(
-                    'message',
-                    'Gagal membuat penilaian'
-                );
+                // Jika ada yang gagal diperbarui, redirect dengan pesan error
+                return redirect()->to('/penilaian')->with('error', 'Gagal memperbarui penilaian.');
             }
         } else {
-
-            $data = [
-                'title' => 'Tambah skala penilaian',
-                'idAlternatif' => $idAlternatif,
-                'validation' => \Config\Services::validation()
-            ];
-            return view('Penilaian/perhitungan_skala_rating', $data);
+            // Jika gagal, tampilkan pesan error atau lakukan tindakan yang sesuai
+            return redirect()->back()->withInput()->with('error', 'Gagal memperbarui data skala penilaian.');
         }
-
-        // $ambil data id alternatif
-
     }
 }

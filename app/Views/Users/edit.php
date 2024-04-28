@@ -9,7 +9,7 @@
         </a>
     </div>
 
-    <form action="/users/update/<?= $user['id_user'] ?>" method="post">
+    <form action="<?= base_url('/users/update') ?>/<?= $user['id_user'] ?>" method="post">
         <?= csrf_field() ?>
         <div class="card-body px-5 py-4 mb-4">
             <input type="hidden" name="id" value="<?= $user['id_user'] ?>">

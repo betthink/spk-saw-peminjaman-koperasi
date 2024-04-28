@@ -106,7 +106,7 @@ class HitungMetode extends BaseController
                 'id_tahun' => $thn[$i]
             ])->first();
 
-            if ($nilai[$i] >= 0.8) {
+            if ($nilai[$i] >= 0.7) {
                 $status = "Layak";
             } else {
                 $status = "Tidak Layak";

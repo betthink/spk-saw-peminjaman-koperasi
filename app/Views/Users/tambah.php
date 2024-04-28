@@ -9,7 +9,7 @@
         </a>
     </div>
 
-    <form action="/users/simpan" method="post">
+    <form action="<?= base_url('/users/simpan') ?>" method="post">
         <?= csrf_field() ?>
         <div class="card-body px-5 py-4 mb-4">
             <div class="row">

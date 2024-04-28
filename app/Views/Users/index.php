@@ -28,12 +28,12 @@
                             <td><?= $row['username'] ?></td>
                             <td><?= $row['role'] == 1 ? "Administrator" : "User"; ?></td>
                             <td>
-                                <form action="/users/edit/<?= $row['id_user'] ?>" method="get" class="d-inline">
+                                <form action="<?= base_url('/users/edit') ?>/<?= $row['id_user'] ?>" method="get" class="d-inline">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="_method" value="GET">
                                     <button type="submit" class="btn btn-sm btn-warning">Edit</button>
                                 </form>
-                                <form action="/users/hapus/<?= $row['id_user'] ?>" method="post" class="d-inline">
+                                <form action=" <?= base_url('/users/hapus') ?>/<?= $row['id_user'] ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah yakin?')">Hapus</button>

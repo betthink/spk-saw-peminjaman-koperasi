@@ -73,4 +73,185 @@
         </div>
 <?php endif ?>
 
+<div style="max-height: 600px; overflow-y: auto;">
+<!-- karakter -->
+<div class="card mt-4 shadow-sm">
+        <div class="card-body m-2">
+                <div class="table-responsive">
+                        <!-- karakter -->
+                        <h3 class="fw-bold my-4">Skala penilaian karakter</h3>
+                        <table id="#" class="table table-striped">
+                                <thead>
+                                        <th>No</th>
+                                        <th>Kriteria</th>
+                                        <th>Skor mentah maksimum</th>
+                                </thead>
+                                <tbody>
+
+                                        <?php
+                                        $index = 1;
+                                        foreach ($karakters as $section => $criteria) : ?>
+                                                <tr>
+                                                        <td></td>
+                                                        <td colspan="2" class="section-title fw-bold"> <?= $section ?></td>
+                                                </tr>
+                                                <?php foreach ($criteria as $kriteria => $score) : ?>
+                                                        <tr>
+                                                                <td><?= $index ?></td>
+                                                                <td><?= $kriteria ?></td>
+                                                                <td><?= $score ?></td>
+                                                        </tr>
+                                                        <?php $index++; ?>
+                                                <?php endforeach; ?>
+                                        <?php endforeach; ?>
+                                </tbody>
+                        </table>
+
+
+                </div>
+        </div>
+</div>
+<!-- capacity to pay -->
+<div class="card mt-4 shadow-sm">
+        <div class="card-body m-2">
+                <div class="table-responsive">
+                        <!-- ctp -->
+                        <h3 class="fw-bold my-4">Skala penilaian kemampuan dalam membayar pinjaman</h3>
+                        <table id="#" class="table table-striped">
+                                <thead>
+                                        <th>No</th>
+                                        <th>Kriteria</th>
+                                        <th>Skor mentah maksimum</th>
+                                </thead>
+                                <tbody>
+                                        <?php
+                                        $index = 1;
+                                        foreach ($CapacitytoPay1 as $section => $cp) : ?>
+                                                <tr>
+                                                        <td></td>
+                                                        <td colspan="2" class="section-title fw-bold"> <?= $section ?></td>
+                                                </tr>
+                                                <?php foreach ($cp as $kriteria => $score) : ?>
+                                                        <tr>
+                                                                <td><?= $index ?></td>
+                                                                <td><?= $kriteria ?></td>
+                                                                <td><?= $score ?></td>
+                                                        </tr>
+                                                        <?php $index++; ?>
+                                                <?php endforeach; ?>
+                                        <?php endforeach; ?>
+                                        <?php
+                                        $index = 6;
+                                        foreach ($CapacitytoPay as $section => $criteria) : ?>
+                                                <tr>
+                                                        <td><?= $index ?></td>
+                                                        <td colspan="" class="section-title "> <?= $section ?></td>
+                                                        <td colspan="2" class="section-title "> <?= $criteria ?></td>
+                                                </tr>
+                                                <?php $index++ ?>
+                                        <?php endforeach; ?>
+                                </tbody>
+                        </table>
+                </div>
+        </div>
+</div>
+<!-- coolaterals -->
+<div class="card mt-4 shadow-sm">
+        <div class="card-body m-2">
+                <div class="table-responsive">
+                        <!-- karakter -->
+                        <h3 class="fw-bold my-4">Skala penilaian Barang jaminan</h3>
+                        <!-- <h5 class="text-alight">Tabel karakter</h5> -->
+                        <table id="#" class="table table-striped">
+                                <thead>
+                                        <th>No</th>
+                                        <th>Kriteria</th>
+                                        <th>Skor mentah maksimum</th>
+                                </thead>
+                                <tbody>
+
+                                        <?php
+                                        $index = 1;
+                                        foreach ($Coolaterals as $section => $Coolateral) : ?>
+                                                <tr>
+                                                        <td><?= $index ?></td>
+                                                        <td colspan="" class="section-title "> <?= $section ?></td>
+                                                        <td><?= $Coolateral ?></td>
+                                                </tr>
+                                                <?php $index++ ?>
+                                        <?php endforeach; ?>
+                                </tbody>
+                        </table>
+
+
+                </div>
+        </div>
+</div>
+<!-- modal -->
+<div class="card mt-4 shadow-sm">
+        <div class="card-body m-2">
+                <div class="table-responsive">
+                        <!-- karakter -->
+                        <h3 class="fw-bold my-4">Skala penilaian Modal</h3>
+                        <!-- <h5 class="text-alight">Tabel karakter</h5> -->
+                        <table id="#" class="table table-striped">
+                                <thead>
+                                        <th>No</th>
+                                        <th>Kriteria</th>
+                                        <th>Skor mentah maksimum</th>
+                                </thead>
+                                <tbody>
+
+                                        <?php
+                                        $index = 1;
+                                        foreach ($modals as $section => $modal) : ?>
+                                                <tr>
+                                                        <td><?= $index ?></td>
+                                                        <td colspan="" class="section-title "> <?= $section ?></td>
+                                                        <td><?= $modal ?></td>
+                                                </tr>
+                                                <?php $index++ ?>
+                                        <?php endforeach; ?>
+                                </tbody>
+                        </table>
+
+
+                </div>
+        </div>
+</div>
+<!-- Credit Condition -->
+<div class="card mt-4 shadow-sm">
+        <div class="card-body m-2">
+                <div class="table-responsive">
+                        <!-- karakter -->
+                        <h3 class="fw-bold my-4">Skala penilaian kondisi pinjaman</h3>
+                        <!-- <h5 class="text-alight">Tabel karakter</h5> -->
+                        <table id="#" class="table table-striped">
+                                <thead>
+                                        <th>No</th>
+                                        <th>Kriteria</th>
+                                        <th>Skor mentah maksimum</th>
+                                </thead>
+                                <tbody>
+
+                                        <?php
+                                        $index = 1;
+                                        foreach ($CreditCondition as $section => $Condition) : ?>
+                                                <tr>
+                                                        <td><?= $index ?></td>
+                                                        <td colspan="" class="section-title "> <?= $section ?></td>
+                                                        <td><?= $Condition ?></td>
+                                                </tr>
+                                                <?php $index++ ?>
+                                        <?php endforeach; ?>
+                                </tbody>
+                        </table>
+
+
+                </div>
+        </div>
+</div>
+</div>
+
+
 <?= $this->endSection('content') ?>

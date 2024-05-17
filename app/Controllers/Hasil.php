@@ -44,8 +44,76 @@ class Hasil extends BaseController
             $dataHasil = $this->hasil->findAll();
         }
 
+        $karakter = [
+            "Memiliki catatan pembayaran pinjaman yang baik, di CU dan tempat lain" => [
+                "Kebiasaan yang baik dalam membayar pinjaman di CU?" => 4,
+                "Kebiasaan yang baik dalam membayar pinjaman di tempat lain?" => 4,
+            ],
+            "Kemauan yang baik/reputasi" => [
+                "Memiliki reputasi yang baik dikalangan dunia bisnis dan organisasi lainnya" => 1,
+                "Yang bersangkutan adalah orang berpengaruh dimasyarakat" => 1,
+            ],
+            "Memiliki tempat tinggal permanen (rumah pribadi)" => [
+                "Lama < 2 tahun" => 0,
+                "Lama 3-5 tahun" => 1,
+                "Lama > 5 tahun" => 2,
+            ],
+            "Hubungan baik dengan sesama" => [
+                "Dengan keluarga" => 1,
+                "Di tempat kerja" => 1,
+                "Di masyarakat" => 1,
+            ],
+        ];
+        $CapacitytoPay = [
+          
+            "Apakah tujuan pinjaman yang bersangkutan mampu mendapatkan keuntungan yang bersih?" => 10,
+            "Apakah bisnis/gaji yang bersangkutan berkembang selama beberapa tahun terakhir?" => 5,
+            "Apakah pemasukan dari usaha cukup untuk membayar angsuran dan bunga pinjaman?" => 20,
+            "Apakah ROI (Return of Investment=laba atas investasi) bisnis/gaji yang bersangkutan mencukupi untuk membayar pinjaman?" => 5,
+            "Apakah jangka waktu pengembalian pinjaman sesuai dengan jangka waktu hidup bisnis/gaji yang bersangkutan?" => 5,
+
+        ];
+        $CapacitytoPay1 = [
+            "Apakah yang bersangkutan memiliki bisnis/gaji yang stabil?" => [
+                "Tidak" => 0,
+                "Lama < 5 tahun" => 3,
+                "Lama > 5 tahun" => 5,
+            ],
+            "Apakah yang bersangkutan masih punya sisa pinjaman di tempat lain?" => [
+                "Tidak" => 20,
+                "Ya" => 5,
+            ],
+            
+        ];
+        $Coolaterals = [
+            "Apakah barang jaminan yang ditawarkan dapat diubah menjadi uang tunai dengan mudah setiap saat?" => 1,
+            "Apakah nilai barang jaminan lebih tinggi daripada jumlah pinjaman yang diajukan dan sesuai kebijakan penilaian barang jaminan?" => 1,
+            "Apakah barang jaminannya mudah disita?" => 1,
+            "Apakah para penjamin bersedia menjaminkan simpanannya atau bersedia dipotong gajinya apabila yang dijaminnya menunggak?" => 1,
+            "Apakah suami/istri yang bersangkutan mengetahui dan menyetujui permohonan pinjaman ini?" => 1,
+        ];
+        $modals = [
+            "Apakah yang bersangkutan menabung secara teratur di CU?" => 1.5,
+            "Apakah ada harta pribadi, tabungan dan asset-asset usaha yang dapat dijadikan jaminan pinjaman?" => 1.5,
+            "Apakah asset-asset yang bersangkutan bertambah terus?" => 1,
+            "Apakah kekayaan bersih yang bersangkutan bertambah setiap tahun?" => 1,
+        ];
+        $CreditCondition = [
+            "Apakah proyek/bisnis yang bersangkutan ramah lingkungan dan legal?" => 1,
+            "Apakah kondisi cuaca sangat berpengaruh atas proyek/bisnis yang akan didanai dari pinjaman ini?" => 1,
+            "Apakah pasar dapat menerima proyek ini?" => 2,
+            "Apakah secara ekonomi masyarakat aktif menjamin kesuksesan proyek/bisnis ini?" => 1,
+        ];
+
+
         $data = [
             'title' => 'Data Hasil',
+            'karakters' => $karakter,
+            'CapacitytoPay1' => $CapacitytoPay1,
+            'CapacitytoPay' => $CapacitytoPay,
+            'Coolaterals' => $Coolaterals,
+            'CreditCondition' => $CreditCondition,
+            'modals' => $modals,
             'bulan' => $bulan,
             'tahun' => $tahun,
             'dataBulan' => $this->dataBulan,

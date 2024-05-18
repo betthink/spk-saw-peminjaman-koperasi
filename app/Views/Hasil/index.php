@@ -108,7 +108,7 @@
                                                 <tr>
                                                         <td></td>
                                                         <td colspan="" class="section-title fw-bold"> Total</td>
-                                                        <td class="fw-bold">15</td>
+                                                        <td class="fw-bold">0.15</td>
                                                 </tr>
                                         </tbody>
                                 </table>
@@ -159,7 +159,7 @@
                                                 <tr>
                                                         <td></td>
                                                         <td colspan="" class="section-title fw-bold"> Total</td>
-                                                        <td class="fw-bold">70</td>
+                                                        <td class="fw-bold">0.7</td>
                                                 </tr>
                                         </tbody>
                                 </table>
@@ -194,7 +194,7 @@
                                                 <tr>
                                                         <td></td>
                                                         <td colspan="" class="section-title fw-bold"> Total</td>
-                                                        <td class="fw-bold">5</td>
+                                                        <td class="fw-bold">0.5</td>
                                                 </tr>
                                         </tbody>
                                 </table>
@@ -231,7 +231,7 @@
                                                 <tr>
                                                         <td></td>
                                                         <td colspan="" class="section-title fw-bold"> Total</td>
-                                                        <td class="fw-bold">5</td>
+                                                        <td class="fw-bold">0.5</td>
                                                 </tr>
                                         </tbody>
                                 </table>
@@ -268,7 +268,7 @@
                                                 <tr>
                                                         <td></td>
                                                         <td colspan="" class="section-title fw-bold"> Total</td>
-                                                        <td class="fw-bold">5</td>
+                                                        <td class="fw-bold">0.5</td>
                                                 </tr>
                                         </tbody>
                                 </table>

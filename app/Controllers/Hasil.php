@@ -3,6 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\HasilModel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Hasil extends BaseController
 {
@@ -55,7 +59,7 @@ class Hasil extends BaseController
             ],
             "Memiliki tempat tinggal permanen (rumah pribadi)" => [
                 "Lama < 2 tahun" => 0,
-                "Lama 3-5 tahun" => 1,
+                "Lama 4-5 tahun" => 1,
                 "Lama > 5 tahun" => 2,
             ],
             "Hubungan baik dengan sesama" => [
@@ -65,7 +69,7 @@ class Hasil extends BaseController
             ],
         ];
         $CapacitytoPay = [
-          
+
             "Apakah tujuan pinjaman yang bersangkutan mampu mendapatkan keuntungan yang bersih?" => 10,
             "Apakah bisnis/gaji yang bersangkutan berkembang selama beberapa tahun terakhir?" => 5,
             "Apakah pemasukan dari usaha cukup untuk membayar angsuran dan bunga pinjaman?" => 20,
@@ -76,14 +80,14 @@ class Hasil extends BaseController
         $CapacitytoPay1 = [
             "Apakah yang bersangkutan memiliki bisnis/gaji yang stabil?" => [
                 "Tidak" => 0,
-                "Lama < 5 tahun" => 3,
+                "Lama < 5 tahun" => 4,
                 "Lama > 5 tahun" => 5,
             ],
             "Apakah yang bersangkutan masih punya sisa pinjaman di tempat lain?" => [
                 "Tidak" => 20,
                 "Ya" => 5,
             ],
-            
+
         ];
         $Coolaterals = [
             "Apakah barang jaminan yang ditawarkan dapat diubah menjadi uang tunai dengan mudah setiap saat?" => 1,
@@ -104,8 +108,6 @@ class Hasil extends BaseController
             "Apakah pasar dapat menerima proyek ini?" => 2,
             "Apakah secara ekonomi masyarakat aktif menjamin kesuksesan proyek/bisnis ini?" => 1,
         ];
-
-
         $data = [
             'title' => 'Data Hasil',
             'karakters' => $karakter,
@@ -169,5 +171,131 @@ class Hasil extends BaseController
         }
 
         return redirect()->to('/hasil');
+    }
+    public function generateExcel($bulan, $tahun)
+    {
+        // Array nama-nama bulan
+        $namaBulan = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+        ];
+
+        // Mendapatkan nama bulan
+        $namaBulanStr = isset($namaBulan[$bulan]) ? $namaBulan[$bulan] : 'Bulan tidak valid';
+
+        // Menggabungkan tahun dengan awalan 20
+        $tahunPenuh = 2000 + $tahun;
+
+        // Data hasil
+        $dataHasil = $this->hasil->getPeriode($bulan, $tahun);
+        usort($dataHasil, function ($a, $b) {
+            return floatval($b['nilai']) <=> floatval($a['nilai']);
+        });
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Menetapkan nilai untuk sel B2
+        $sheet->setCellValue('B1', "Hasil perangkingan SPK metode SAW ");
+        $sheet->setCellValue('B2', "Periode");
+        $sheet->setCellValue('C2', ":");
+        $sheet->setCellValue('D2',  $namaBulanStr . " / " . $tahunPenuh);
+        $sheet->mergeCells('B1:G1');
+
+        // Merge cells F3:Q based on the number of data in $dataHasil
+        // for ($i = 3; $i < (count($dataHasil) + 5); $i++) {
+        //     $sheet->mergeCells('F' . $i . ':Q' . $i);
+        // }
+        $sheet->getStyle('B1')->getFont()->setBold(true);
+
+        // Mengatur nilai untuk header tabel di Excel dan membuat teks header menjadi tebal
+        $sheet->setCellValue('B4', 'No')
+            ->getStyle('B4')
+            ->getFont()
+            ->setBold(true);
+
+        $sheet->setCellValue('C4', 'Nasabah')
+            ->getStyle('C4')
+            ->getFont()
+            ->setBold(true);
+
+        $sheet->setCellValue('D4', 'Nilai Preferensi')
+            ->getStyle('D4')
+            ->getFont()
+            ->setBold(true);
+
+        $sheet->setCellValue('E4', 'Status')
+            ->getStyle('E4')
+            ->getFont()
+            ->setBold(true);
+
+        $sheet->setCellValue('F4', 'Hasil')
+            ->getStyle('F4')
+            ->getFont()
+            ->setBold(true);
+        $sheet->setCellValue('G4', 'Rangking')
+            ->getStyle('G4')
+            ->getFont()
+            ->setBold(true);
+
+        // Menambahkan border di sekitar sel dari A1 hingga F7
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['argb' => 'FF000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('B4:G' . (count($dataHasil) + 4))->applyFromArray($styleArray);
+
+        // Fungsi evaluasi pinjaman
+        function evaluasiPinjaman($nilai)
+        {
+            $persentase = $nilai * 100;
+            if ($persentase > 0 && $persentase <= 70) {
+                return "Permohonan pinjaman ditolak, karena sangat tinggi kemungkinan yang bersangkutan tidak mampu mengembalikan pinjaman.";
+            } elseif ($persentase > 70 && $persentase <= 80) {
+                return "Disetujui, tetapi memerlukan barang jaminan yang memadai, jaminan dari penjamin, memiliki jumlah tabungan yang memadai dan pengamatan pasca pinjaman cair yang seksama.";
+            } elseif ($persentase > 80 && $persentase <= 90) {
+                return "Disetujui, tetapi memerlukan barang jaminan yang memadai dan pengamatan pasca pinjaman cair yang seksama.";
+            } elseif ($persentase > 90 && $persentase <= 100) {
+                return "Disetujui, dengan atau tanpa barang jaminan.";
+            } else {
+                return "Nilai persentase tidak valid.";
+            }
+        }
+
+        // Mengisi data hasil ke dalam tabel
+        $no = 1;
+        $numrow = 5;
+        foreach ($dataHasil as $row) {
+            $nilai = floatval($row['nilai']);
+            $kesimpulan = evaluasiPinjaman($nilai);
+            $sheet->setCellValue('B' . $numrow, $no);
+            $sheet->setCellValue('C' . $numrow, $row['alternatif']);
+            $sheet->setCellValue('D' . $numrow, $nilai);
+            $sheet->setCellValue('E' . $numrow, $row['status']);
+            $sheet->setCellValue('F' . $numrow, $kesimpulan);
+            $sheet->setCellValue('G' . $numrow, '(' . $no . ')');
+            $no++;
+            $numrow++;
+        }
+
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->setTitle("Hasil penilaian kredit");
+
+        // $pdfWriter = new Mpdf($spreadsheet);
+        // $pdfWriter->save('php://output', 'Hasil-penilaian.pdf');
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = "Hasil-penilaian-" . $namaBulanStr . "-" . $tahunPenuh . ".xlsx";
+        // Set headers for Excel file download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
     }
 }

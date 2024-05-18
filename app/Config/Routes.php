@@ -79,3 +79,4 @@ $routes->get('/hasil', 'Hasil::index');
 $routes->get('/hasil/periode/(:any)/(:any)', 'Hasil::index/$1/$2');
 $routes->get('/hasil/cetak/periode/(:any)/(:any)', 'Hasil::cetak/$1/$2');
 $routes->get('/hasil/hapus/periode/(:any)/(:any)', 'Hasil::hapus/$1/$2');
+$routes->get('/hasil/unduh/periode/(:any)/(:any)', 'Hasil::generateExcel/$1/$2');

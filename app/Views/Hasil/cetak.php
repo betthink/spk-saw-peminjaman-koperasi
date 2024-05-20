@@ -50,7 +50,8 @@
                                 <thead>
                                         <th>No</th>
                                         <th>Nama Nasabah</th>
-                                        <th>Nilai Preferensi</th>
+                                        <th>Penilaian</th>
+                                        <th>Keputusan</th>
                                         <th><i>Ranking</i></th>
                                         <th>Status</th>
                                 </thead>
@@ -61,7 +62,8 @@
                                                 <tr>
                                                         <td><?= $no++ ?></td>
                                                         <td><?= $row['alternatif'] ?></td>
-                                                        <td><?= $row['nilai'] ?></td>
+                                                        <td><?= $row['nilai'] ?>%</td>
+                                                        <td><?= $row['keputusan'] ?></td>
                                                         <td class="fw-bold"><?= "(" . $peringkat++ . ")" ?></td>
                                                         <td class="fw-bold text-danger"><?= $row['status'] ?></td>
                                                 </tr>

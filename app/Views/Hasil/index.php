@@ -80,7 +80,7 @@
                 <div class="card-body m-2">
                         <div class="table-responsive">
                                 <!-- karakter -->
-                                <h3 class="fw-bold my-4">Skala penilaian karakter</h3>
+                                <h3 class="fw-bold my-4">Skala penilaian karakter (Character)</h3>
                                 <table id="#" class="table table-striped">
                                         <thead>
                                                 <th>No</th>
@@ -122,7 +122,7 @@
                 <div class="card-body m-2">
                         <div class="table-responsive">
                                 <!-- ctp -->
-                                <h3 class="fw-bold my-4">Skala penilaian kemampuan dalam membayar pinjaman</h3>
+                                <h3 class="fw-bold my-4">Skala penilaian kemampuan dalam membayar pinjaman (Capacity to Pay)</h3>
                                 <table id="#" class="table table-striped">
                                         <thead>
                                                 <th>No</th>
@@ -171,7 +171,7 @@
                 <div class="card-body m-2">
                         <div class="table-responsive">
                                 <!-- karakter -->
-                                <h3 class="fw-bold my-4">Skala penilaian Barang jaminan</h3>
+                                <h3 class="fw-bold my-4">Skala penilaian Barang jaminan (Coolateral)</h3>
                                 <!-- <h5 class="text-alight">Tabel karakter</h5> -->
                                 <table id="#" class="table table-striped">
                                         <thead>
@@ -194,7 +194,7 @@
                                                 <tr>
                                                         <td></td>
                                                         <td colspan="" class="section-title fw-bold"> Total</td>
-                                                        <td class="fw-bold">0.5</td>
+                                                        <td class="fw-bold">0.05</td>
                                                 </tr>
                                         </tbody>
                                 </table>
@@ -208,7 +208,7 @@
                 <div class="card-body m-2">
                         <div class="table-responsive">
                                 <!-- karakter -->
-                                <h3 class="fw-bold my-4">Skala penilaian Modal</h3>
+                                <h3 class="fw-bold my-4">Skala penilaian Modal (Capital)</h3>
                                 <!-- <h5 class="text-alight">Tabel karakter</h5> -->
                                 <table id="#" class="table table-striped">
                                         <thead>
@@ -231,7 +231,7 @@
                                                 <tr>
                                                         <td></td>
                                                         <td colspan="" class="section-title fw-bold"> Total</td>
-                                                        <td class="fw-bold">0.5</td>
+                                                        <td class="fw-bold">0.05</td>
                                                 </tr>
                                         </tbody>
                                 </table>
@@ -245,7 +245,7 @@
                 <div class="card-body m-2">
                         <div class="table-responsive">
                                 <!-- karakter -->
-                                <h3 class="fw-bold my-4">Skala penilaian kondisi pinjaman</h3>
+                                <h3 class="fw-bold my-4">Skala penilaian kondisi pinjaman (Credit Condition)</h3>
                                 <!-- <h5 class="text-alight">Tabel karakter</h5> -->
                                 <table id="#" class="table table-striped">
                                         <thead>
@@ -268,7 +268,7 @@
                                                 <tr>
                                                         <td></td>
                                                         <td colspan="" class="section-title fw-bold"> Total</td>
-                                                        <td class="fw-bold">0.5</td>
+                                                        <td class="fw-bold">0.05</td>
                                                 </tr>
                                         </tbody>
                                 </table>

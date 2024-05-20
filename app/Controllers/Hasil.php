@@ -68,6 +68,18 @@ class Hasil extends BaseController
                 "Di masyarakat" => 0.01,
             ],
         ];
+        $CapacitytoPay1 = [
+            "Apakah yang bersangkutan memiliki bisnis/gaji yang stabil?" => [
+                "Tidak" => 0,
+                "Lama < 5 tahun" => 0.03,
+                "Lama > 5 tahun" => 0.05,
+            ],
+            "Apakah yang bersangkutan masih punya sisa pinjaman di tempat lain?" => [
+                "Tidak" => 0.2,
+                "Ya" => 0.05,
+            ],
+
+        ];
         $CapacitytoPay = [
 
             "Apakah tujuan pinjaman yang bersangkutan mampu mendapatkan keuntungan yang bersih?" => 0.1,
@@ -77,18 +89,7 @@ class Hasil extends BaseController
             "Apakah jangka waktu pengembalian pinjaman sesuai dengan jangka waktu hidup bisnis/gaji yang bersangkutan?" => 0.05,
 
         ];
-        $CapacitytoPay1 = [
-            "Apakah yang bersangkutan memiliki bisnis/gaji yang stabil?" => [
-                "Tidak" => 0,
-                "Lama < 5 tahun" => 0.04,
-                "Lama > 5 tahun" => 0.05,
-            ],
-            "Apakah yang bersangkutan masih punya sisa pinjaman di tempat lain?" => [
-                "Tidak" => 0.2,
-                "Ya" => 0.05,
-            ],
 
-        ];
         $Coolaterals = [
             "Apakah barang jaminan yang ditawarkan dapat diubah menjadi uang tunai dengan mudah setiap saat?" => 0.01,
             "Apakah nilai barang jaminan lebih tinggi daripada jumlah pinjaman yang diajukan dan sesuai kebijakan penilaian barang jaminan?" => 0.01,
@@ -134,14 +135,44 @@ class Hasil extends BaseController
             session()->setFlashdata('error', 'Anda harus login terlebih dahulu.');
             return redirect()->to('/login');
         }
+        $dataHasil  = $this->hasil->getPeriode($bulan, $tahun);
+        function hasilKeputusan($nilai)
+        {
+            $persentase = $nilai * 100;
+            if (
+                $persentase > 0 && $persentase <= 70
+            ) {
+                return "Permohonan pinjaman ditolak, karena sangat tinggi kemungkinan yang bersangkutan tidak mampu mengembalikan pinjaman.";
+            } elseif ($persentase > 70 && $persentase <= 80) {
+                return "Disetujui, tetapi memerlukan barang jaminan yang memadai, jaminan dari penjamin, memiliki jumlah tabungan yang memadai dan pengamatan pasca pinjaman cair yang seksama.";
+            } elseif ($persentase > 80 && $persentase <= 90) {
+                return "Disetujui, tetapi memerlukan barang jaminan yang memadai dan pengamatan pasca pinjaman cair yang seksama.";
+            } elseif ($persentase > 90 && $persentase <= 100) {
+                return "Disetujui, dengan atau tanpa barang jaminan.";
+            } else {
+                return "Nilai persentase tidak valid.";
+            }
+        }
+        // Konversi nilai ke persentase
+        foreach ($dataHasil as
+        &$row) {
+            $point = floatval($row['nilai']);
+            $row['keputusan'] = hasilKeputusan($point); // Konversi ke persen tanpa '%'
+            $row['nilai'] = floatval($row['nilai']) * 100; // Konversi ke persen tanpa '%'
+        }
+        unset($row); // Break the reference
 
+        // Urutkan data berdasarkan nilai dalam urutan menurun
+        usort($dataHasil, function ($a, $b) {
+            return $b['nilai'] <=> $a['nilai'];
+        });
         $data = [
             'title' => 'cetak/hasil/periode',
             'bulan' => $bulan,
             'tahun' => $tahun,
             'dataBulan' => $this->dataBulan,
             'dataTahun' => $this->dataTahun,
-            'hasil' => $this->hasil->getPeriode($bulan, $tahun),
+            'hasil' => $dataHasil,
         ];
         return view('Hasil/cetak', $data);
     }
@@ -219,7 +250,7 @@ class Hasil extends BaseController
             ->getFont()
             ->setBold(true);
 
-        $sheet->setCellValue('D4', 'Nilai Preferensi')
+        $sheet->setCellValue('D4', 'Penilaian')
             ->getStyle('D4')
             ->getFont()
             ->setBold(true);
@@ -229,7 +260,7 @@ class Hasil extends BaseController
             ->getFont()
             ->setBold(true);
 
-        $sheet->setCellValue('F4', 'Hasil')
+        $sheet->setCellValue('F4', 'Keputusan')
             ->getStyle('F4')
             ->getFont()
             ->setBold(true);
@@ -272,10 +303,11 @@ class Hasil extends BaseController
         $numrow = 5;
         foreach ($dataHasil as $row) {
             $nilai = floatval($row['nilai']);
+            $persentase = $nilai * 100;
             $kesimpulan = evaluasiPinjaman($nilai);
             $sheet->setCellValue('B' . $numrow, $no);
             $sheet->setCellValue('C' . $numrow, $row['alternatif']);
-            $sheet->setCellValue('D' . $numrow, $nilai);
+            $sheet->setCellValue('D' . $numrow, $persentase . '%');
             $sheet->setCellValue('E' . $numrow, $row['status']);
             $sheet->setCellValue('F' . $numrow, $kesimpulan);
             $sheet->setCellValue('G' . $numrow, '(' . $no . ')');

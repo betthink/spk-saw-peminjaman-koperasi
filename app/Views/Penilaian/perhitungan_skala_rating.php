@@ -21,22 +21,24 @@
                     <div class="row">
 
                         <div class="col-md-12 mb-3">
-                            <div class="row">   
+                            <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Kebiasaan yang baik dalam membayar pinjaman di CU?</label>
-                                    <select name="karakternilai[]" class="form-control" required>
+                                    <input placeholder="masukan nilai 0 - 4" name="karakternilai[]" class="form-control" type="number" min="0" max="4" step="1" required>
+                                    <!-- <select name="karakternilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="4">Ya</option>
                                         <option value="0">Tidak</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Kebiasaan yang baik dalam membayar pinjaman di tempat lain?</label>
-                                    <select name="karakternilai[]" class="form-control" required>
+                                    <input placeholder="masukan nilai 0 - 4" name="karakternilai[]" class="form-control" type="number" min="0" max="4" step="1" required>
+                                    <!-- <select name="karakternilai[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="4">Ya</option>
                                         <option value="0">Tidak</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
                         </div>
@@ -127,11 +129,12 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah tujuan pinjaman yang bersangkutan mampu mendapatkan keuntungan yang bersih?</label>
-                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
+                                    <input placeholder="masukan nilai 0 - 10" name="nilaiCapacitytoPay[]" class="form-control" type="number" min="0" max="10" step="1" required>
+                                    <!-- <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="10">Ya</option>
                                         <option value="0">Tidak</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
                         </div>
@@ -139,19 +142,21 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah bisnis/gaji yang bersangkutan berkembang selama beberapa tahun terakhir?</label>
-                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
+                                    <input placeholder="masukan nilai 0 - 5" name="nilaiCapacitytoPay[]" class="form-control" type="number" min="0" max="5" step="1" required>
+                                    <!-- <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="5">Ya</option>
                                         <option value="0">Tidak</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah pemasukan dari usaha cukup untuk membayar angsuran dan bunga pinjaman?</label>
-                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
+                                    <input placeholder="masukan nilai 0 - 20" name="nilaiCapacitytoPay[]" class="form-control" type="number" min="0" max="20" step="1" required>
+                                    <!-- <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="20">Ya</option>
                                         <option value="0">Tidak</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
                         </div>
@@ -159,19 +164,21 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah ROI (Return of Investment=laba atas investasi) bisnis/gaji yang bersangkutan mencukupi untuk membayar pinjaman?</label>
-                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
+                                    <input placeholder="masukan nilai 0 - 5" name="nilaiCapacitytoPay[]" class="form-control" type="number" min="0" max="5" step="1" required>
+                                    <!-- <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="5">Ya</option>
                                         <option value="0">Tidak</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah jangka waktu pengembalian pinjaman sesuai dengan jangka waktu hidup bisnis/gaji yang bersangkutan?</label>
-                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
+                                    <input placeholder="masukan nilai 0 - 5" name="nilaiCapacitytoPay[]" class="form-control" type="number" min="0" max="5" step="1" required>
+                                    <!-- <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="5">Ya</option>
                                         <option value="0">Tidak</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
                         </div>
@@ -179,11 +186,12 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label class="form-label">Apakah yang bersangkutan masih punya sisa pinjaman di tempat lain?</label>
-                                    <select name="nilaiCapacitytoPay[]" class="form-control" required>
+                                    <input placeholder="masukan nilai 5 - 20" name="nilaiCapacitytoPay[]" class="form-control" type="number" min="5" max="20" step="1" required>
+                                    <!-- <select name="nilaiCapacitytoPay[]" class="form-control" required>
                                         <option value="#" disabled selected>-- pilih --</option>
                                         <option value="5">Ya</option>
                                         <option value="20">Tidak</option>
-                                    </select>
+                                    </select> -->
                                 </div>
 
                             </div>

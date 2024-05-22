@@ -25,19 +25,11 @@
 
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Kebiasaan yang baik dalam membayar pinjaman di CU?</label>
-                                    <select name="karakternilai[<?= $dataSkala[0]['id_skala'] ?>]" class="form-control" required>
-                                        <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="4" <?= $dataSkala[0]['value'] == 4 ? 'selected' : '' ?>>Ya</option>
-                                        <option value="0" <?= $dataSkala[0]['value'] == 0 ? 'selected' : '' ?>>Tidak</option>
-                                    </select>
+                                    <input value="<?= $dataSkala[0]['value'] ?>" placeholder="masukan nilai 0 - 4" name="karakternilai[<?= $dataSkala[0]['id_skala'] ?>]" class="form-control" type="number" min="0" max=" 4" step="1" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Kebiasaan yang baik dalam membayar pinjaman di tempat lain?</label>
-                                    <select name="karakternilai[<?= $dataSkala[1]['id_skala'] ?>]" class="form-control" required>
-                                        <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="4" <?= $dataSkala[1]['value'] == 4 ? 'selected' : '' ?>>Ya</option>
-                                        <option value="0" <?= $dataSkala[1]['value'] == 0 ? 'selected' : '' ?>>Tidak</option>
-                                    </select>
+                                    <input value="<?= $dataSkala[1]['value'] ?>" placeholder="masukan nilai 0 - 4" name="karakternilai[<?= $dataSkala[1]['id_skala'] ?>]" class="form-control" type="number" min="0" max=" 4" step="1" required>
                                 </div>
 
                             </div>
@@ -128,11 +120,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah tujuan pinjaman yang bersangkutan mampu mendapatkan keuntungan yang bersih?</label>
-                                    <select name="nilaiCapacitytoPay[<?= $dataSkala[9]['id_skala'] ?>]" class="form-control" required>
-                                        <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="10" <?= $dataSkala[9]['value'] == 10 ? 'selected' : '' ?>>Ya</option>
-                                        <option value="0" <?= $dataSkala[9]['value'] == 0 ? 'selected' : '' ?>>Tidak</option>
-                                    </select>
+                                    <input value="<?= $dataSkala[9]['value'] ?>" placeholder="masukan nilai 0 - 10" name="nilaiCapacitytoPay[<?= $dataSkala[9]['id_skala'] ?>]" class="form-control" type="number" min="0" max=" 10" step="1" required>
                                 </div>
                             </div>
                         </div>
@@ -140,19 +128,14 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah bisnis/gaji yang bersangkutan berkembang selama beberapa tahun terakhir?</label>
-                                    <select name="nilaiCapacitytoPay[<?= $dataSkala[10]['id_skala'] ?>]" class="form-control" required>
-                                        <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="5" <?= $dataSkala[10]['value'] == 5 ? 'selected' : '' ?>>Ya</option>
-                                        <option value="0" <?= $dataSkala[10]['value'] == 0 ? 'selected' : '' ?>>Tidak</option>
-                                    </select>
+                                    <input value="<?= $dataSkala[10]['value'] ?>" placeholder="masukan nilai 0 - 5" name="nilaiCapacitytoPay[<?= $dataSkala[10]['id_skala'] ?>]" class="form-control" type="number" min="0" max="5" step="1" required>
+                                  
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah pemasukan dari usaha cukup untuk membayar angsuran dan bunga pinjaman?</label>
-                                    <select name="nilaiCapacitytoPay[<?= $dataSkala[11]['id_skala'] ?>]" class="form-control" required>
-                                        <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="20" <?= $dataSkala[11]['value'] == 20 ? 'selected' : '' ?>>Ya</option>
-                                        <option value="0" <?= $dataSkala[11]['value'] == 0 ? 'selected' : '' ?>>Tidak</option>
-                                    </select>
+
+                                    <input value="<?= $dataSkala[11]['value'] ?>" placeholder="masukan nilai 0 - 20" name="nilaiCapacitytoPay[<?= $dataSkala[11]['id_skala'] ?>]" class="form-control" type="number" min="0" max=" 20" step="1" required>
+                                 
                                 </div>
                             </div>
                         </div>
@@ -160,19 +143,12 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah ROI (Return of Investment=laba atas investasi) bisnis/gaji yang bersangkutan mencukupi untuk membayar pinjaman?</label>
-                                    <select name="nilaiCapacitytoPay[<?= $dataSkala[12]['id_skala'] ?>]" class="form-control" required>
-                                        <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="5" <?= $dataSkala[12]['value'] == 5 ? 'selected' : '' ?>>Ya</option>
-                                        <option value="0" <?= $dataSkala[12]['value'] == 0 ? 'selected' : '' ?>>Tidak</option>
-                                    </select>
+                                    <input value="<?= $dataSkala[12]['value'] ?>" placeholder="masukan nilai 0 - 5" name="nilaiCapacitytoPay[<?= $dataSkala[12]['id_skala'] ?>]" class="form-control" type="number" min="0" max="5" step="1" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label">Apakah jangka waktu pengembalian pinjaman sesuai dengan jangka waktu hidup bisnis/gaji yang bersangkutan?</label>
-                                    <select name="nilaiCapacitytoPay[<?= $dataSkala[13]['id_skala'] ?>]" class="form-control" required>
-                                        <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="5" <?= $dataSkala[13]['value'] == 5 ? 'selected' : '' ?>>Ya</option>
-                                        <option value="0" <?= $dataSkala[13]['value'] == 0 ? 'selected' : '' ?>>Tidak</option>
-                                    </select>
+                                    <input value="<?= $dataSkala[13]['value'] ?>" placeholder="masukan nilai 0 - 5" name="nilaiCapacitytoPay[<?= $dataSkala[13]['id_skala'] ?>]" class="form-control" type="number" min="0" max="5" step="1" required>
+                                 
                                 </div>
                             </div>
                         </div>
@@ -180,11 +156,8 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label class="form-label">Apakah yang bersangkutan masih punya sisa pinjaman di tempat lain?</label>
-                                    <select name="nilaiCapacitytoPay[<?= $dataSkala[14]['id_skala'] ?>]" class="form-control" required>
-                                        <option value="#" disabled selected>-- pilih --</option>
-                                        <option value="5" <?= $dataSkala[14]['value'] == 5 ? 'selected' : '' ?>>Ya</option>
-                                        <option value="20" <?= $dataSkala[14]['value'] == 20 ? 'selected' : '' ?>>Tidak</option>
-                                    </select>
+                                    <input value="<?= $dataSkala[14]['value'] ?>" placeholder="masukan nilai 5 - 20" name="nilaiCapacitytoPay[<?= $dataSkala[14]['id_skala'] ?>]" class="form-control" type="number" min="5" max="20" step="1" required>
+                                  
                                 </div>
 
                             </div>
@@ -359,9 +332,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>

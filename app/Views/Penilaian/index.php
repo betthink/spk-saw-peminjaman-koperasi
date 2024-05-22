@@ -69,13 +69,16 @@
                                 <td>
                                     <?php if (!empty(($row['isPenilaianExists']))) : ?>
                                         <!-- Tombol Edit -->
-                                        <form action="<?= site_url('/penilaian/edit') ?>/<?= $row['id_alternatif'] ?>" method="get" class="d-inline">
+                                        <!-- <form action="<?= site_url('/penilaian/edit') ?>/<?= $row['id_alternatif'] ?>" method="get" class="d-inline">
                                             <?= csrf_field() ?>
                                             <input type="hidden" name="bulan" value="<?= $bulan ?>">
                                             <input type="hidden" name="tahun" value="<?= $tahun ?>">
-                                            <input type="hidden" name="_method" value="GET">
-                                            <button type="submit" class="btn btn-sm btn-warning">Edit</button>
-                                        </form>
+                                            <input type="hidden" name="_method" value="GET"> -->
+
+                                            <button type="submit" class="btn btn-sm btn-warning">
+                                                <a class="text-light" href="<?= base_url('/skala-rating/edit/') . $row['id_alternatif'] ?>">
+                                                    Edit</a></button>
+                                        <!-- </form> -->
                                     <?php else : ?>
                                         <!-- Tombol Input -->
                                         <form action="<?= site_url('/penilaian/skala-rating') ?>/<?= $row['id_alternatif'] ?>" method="get" class="d-inline">

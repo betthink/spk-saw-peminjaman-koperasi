@@ -259,6 +259,7 @@ class Penilaian extends BaseController
                 'capitalnilai' => $this->request->getPost('capitalnilai'),
                 'creditconditionnilai' => $this->request->getPost('creditconditionnilai'),
             ];
+            // dd($data);
             // disini insert 
             // $ModelSkalaPenilaian = new SkalaPenilaianModel();
             $insertSkala =   $this->SkalaPenilaianM->insertDataSkala($idAlternatif['id_alternatif'], $data);

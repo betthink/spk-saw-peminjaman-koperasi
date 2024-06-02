@@ -286,9 +286,7 @@ class Penilaian extends BaseController
                 // dd($total);
                 function klasifikasi_dinamis($nilai, $maksimum, $kategori)
                 {
-                    // Menghitung rentang setiap kategori
                     $range = ceil($maksimum / count($kategori));
-                    // Menemukan kategori yang sesuai untuk nilai
                     foreach ($kategori as $key => $tingkat) {
                         $mulai = $key * $range + 1;
                         $akhir = ($key + 1) * $range;
@@ -304,13 +302,21 @@ class Penilaian extends BaseController
                 $maksimumcapitalnilai = 5;
                 $maksimumcreditcondition = 5;
                 $kategori = [1, 2, 3, 4, 5];
+                // $nilai_skala_rating = [
+                //     'Character' => klasifikasi_dinamis($total['karakternilai'], $maksimumkarakter, $kategori),
+                //     'Capacity to Pay' => klasifikasi_dinamis($total['nilaiCapacitytoPay'], $maksimumCTP, $kategori),
+                //     'Collateral' => klasifikasi_dinamis($total['coolateralnilai'], $maksimumcoolateral, $kategori),
+                //     'Capital Status' => klasifikasi_dinamis($total['capitalnilai'], $maksimumcapitalnilai, $kategori),
+                //     'Credit Condition' => klasifikasi_dinamis($total['creditconditionnilai'], $maksimumcreditcondition, $kategori),
+                // ];
                 $nilai_skala_rating = [
-                    'Character' => klasifikasi_dinamis($total['karakternilai'], $maksimumkarakter, $kategori),
-                    'Capacity to Pay' => klasifikasi_dinamis($total['nilaiCapacitytoPay'], $maksimumCTP, $kategori),
-                    'Collateral' => klasifikasi_dinamis($total['coolateralnilai'], $maksimumcoolateral, $kategori),
-                    'Capital Status' => klasifikasi_dinamis($total['capitalnilai'], $maksimumcapitalnilai, $kategori),
-                    'Credit Condition' => klasifikasi_dinamis($total['creditconditionnilai'], $maksimumcreditcondition, $kategori),
+                    'Character' => $total['karakternilai'],
+                    'Capacity to Pay' => $total['nilaiCapacitytoPay'],
+                    'Collateral' => $total['coolateralnilai'],
+                    'Capital Status' => $total['capitalnilai'],
+                    'Credit Condition' => $total['creditconditionnilai'],
                 ];
+                // dd($nilai_skala_rating);
 
                 $ModelPenilaian = new PenilaianModel();
 
@@ -457,19 +463,24 @@ class Penilaian extends BaseController
             $maksimumcapitalnilai = 5;
             $maksimumcreditcondition = 5;
             $kategori = [1, 2, 3, 4, 5];
+            // $nilai_skala_rating = [
+            //     'Character' => klasifikasi_dinamis($total['karakternilai'], $maksimumkarakter, $kategori),
+            //     'Capacity to Pay' => klasifikasi_dinamis($total['nilaiCapacitytoPay'], $maksimumCTP, $kategori),
+            //     'Collateral' => klasifikasi_dinamis($total['coolateralnilai'], $maksimumcoolateral, $kategori),
+            //     'Capital Status' => klasifikasi_dinamis($total['capitalnilai'], $maksimumcapitalnilai, $kategori),
+            //     'Credit Condition' => klasifikasi_dinamis($total['creditconditionnilai'], $maksimumcreditcondition, $kategori),
+            // ];
             $nilai_skala_rating = [
-                'Character' => klasifikasi_dinamis($total['karakternilai'], $maksimumkarakter, $kategori),
-                'Capacity to Pay' => klasifikasi_dinamis($total['nilaiCapacitytoPay'], $maksimumCTP, $kategori),
-                'Collateral' => klasifikasi_dinamis($total['coolateralnilai'], $maksimumcoolateral, $kategori),
-                'Capital Status' => klasifikasi_dinamis($total['capitalnilai'], $maksimumcapitalnilai, $kategori),
-                'Credit Condition' => klasifikasi_dinamis($total['creditconditionnilai'], $maksimumcreditcondition, $kategori),
+                'Character' => $total['karakternilai'],
+                'Capacity to Pay' => $total['nilaiCapacitytoPay'],
+                'Collateral' => $total['coolateralnilai'],
+                'Capital Status' => $total['capitalnilai'],
+                'Credit Condition' => $total['creditconditionnilai'],
             ];
-
 
             // Looping untuk menyisipkan data nilai
             $allInsertedSuccessfully = true;
             $getPenilaian = $this->penilaian->where('id_alternatif', $dataAlternatif['id_alternatif'])->findAll();
-            // var_dump($nilai_skala_rating);die;
             // Looping untuk menyisipkan data nilai
             foreach ($nilai_skala_rating as $namaKriteria => $nilai) {
                 // Mendapatkan ID Kriteria berdasarkan nama kriteria

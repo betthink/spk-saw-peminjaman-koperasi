@@ -110,8 +110,7 @@
                 <div class="card-body pb-0">
                     <h5 class="card-title">Pie Chart <span>| Keseluruhan Data</span></h5>
 
-                    <div id="trafficChart" style="min-height: 285px;" class="echart"></div>
-
+                    <div id="trafficChart" style="min-height: 385px; " class="echart"></div>
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
                             const pieApiUrl = '<?= site_url('dashboard/pieChart') ?>';
@@ -119,21 +118,30 @@
                             fetch(pieApiUrl)
                                 .then(response => response.json())
                                 .then(data => {
-                                    // Misalkan response dari API adalah objek dengan properti 'layak' dan 'tidakLayak'
-                                    const layak = data.jumlah_layak;
-                                    const tidakLayak = data.jumlah_tidak_layak;
+                                    const chartData = [{
+                                            value: data.jumlah_ditolak.persen,
+                                            name: 'Ditolak (' + data.jumlah_ditolak.persen + '% - ' + data.jumlah_ditolak.jumlah + ' nasabah)'
+                                        },
+                                        {
+                                            value: data.jumlah_disetujui_jaminan_memadai.persen,
+                                            name: 'Disetujui Jaminan Memadai (' + data.jumlah_disetujui_jaminan_memadai.persen + '% - ' + data.jumlah_disetujui_jaminan_memadai.jumlah + ' nasabah)'
+                                        },
+                                        {
+                                            value: data.jumlah_disetujui_jaminan_pengamatan.persen,
+                                            name: 'Disetujui Jaminan Pengamatan (' + data.jumlah_disetujui_jaminan_pengamatan.persen + '% - ' + data.jumlah_disetujui_jaminan_pengamatan.jumlah + ' nasabah)'
+                                        },
+                                        {
+                                            value: data.jumlah_disetujui_tanpa_jaminan.persen,
+                                            name: 'Disetujui Tanpa Jaminan (' + data.jumlah_disetujui_tanpa_jaminan.persen + '% - ' + data.jumlah_disetujui_tanpa_jaminan.jumlah + ' nasabah)'
+                                        }
+                                    ];
 
-                                    // Jumlahkan total untuk mendapatkan persentase
-                                    const total = layak + tidakLayak;
-                                    const layakPersen = (layak / total * 100).toFixed(2); // Menggunakan toFixed(2) untuk membatasi dua angka di belakang koma
-                                    const tidakLayakPersen = (tidakLayak / total * 100).toFixed(2);
-                                    // console.log(tidakLayakPersen);
                                     echarts.init(document.querySelector("#trafficChart")).setOption({
                                         tooltip: {
                                             trigger: 'item'
                                         },
                                         legend: {
-                                            top: '5%',
+                                            top: '0%',
                                             left: 'center'
                                         },
                                         series: [{
@@ -155,21 +163,15 @@
                                             labelLine: {
                                                 show: false
                                             },
-                                            data: [{
-                                                    value: layakPersen,
-                                                    name: 'Layak (' + layakPersen + '%)',
-                                                },
-                                                {
-                                                    value: tidakLayakPersen,
-                                                    name: 'Tidak Layak (' + tidakLayakPersen + '%)',
-                                                }
-                                            ]
+                                            data: chartData
                                         }]
                                     });
                                 })
                                 .catch(error => console.error('Error fetching data:', error));
                         });
                     </script>
+
+
 
                 </div>
             </div><!-- End Website Traffic -->
@@ -196,83 +198,113 @@
 
                     <!-- column Chart -->
                     <div id="columnChart"></div>
-
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
+                            const updateChart = (data) => {
+                                const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+                                const dataDitolak = labels.map((label, index) => {
+                                    const monthIndex = index + 1;
+                                    const monthData = data.find(d => parseInt(d.id_bulan) === monthIndex);
+                                    return monthData ? parseInt(monthData.jumlah_ditolak) : 0;
+                                });
+
+                                const dataDisetujuiJaminanMemadai = labels.map((label, index) => {
+                                    const monthIndex = index + 1;
+                                    const monthData = data.find(d => parseInt(d.id_bulan) === monthIndex);
+                                    return monthData ? parseInt(monthData.jumlah_disetujui_jaminan_memadai) : 0;
+                                });
+
+                                const dataDisetujuiJaminanPengamatan = labels.map((label, index) => {
+                                    const monthIndex = index + 1;
+                                    const monthData = data.find(d => parseInt(d.id_bulan) === monthIndex);
+                                    return monthData ? parseInt(monthData.jumlah_disetujui_jaminan_pengamatan) : 0;
+                                });
+
+                                const dataDisetujuiTanpaJaminan = labels.map((label, index) => {
+                                    const monthIndex = index + 1;
+                                    const monthData = data.find(d => parseInt(d.id_bulan) === monthIndex);
+                                    return monthData ? parseInt(monthData.jumlah_disetujui_tanpa_jaminan) : 0;
+                                });
+
+                                const options = {
+                                    series: [{
+                                            name: 'Ditolak',
+                                            data: dataDitolak
+                                        },
+                                        {
+                                            name: 'Disetujui Jaminan Memadai',
+                                            data: dataDisetujuiJaminanMemadai
+                                        },
+                                        {
+                                            name: 'Disetujui Jaminan Pengamatan',
+                                            data: dataDisetujuiJaminanPengamatan
+                                        },
+                                        {
+                                            name: 'Disetujui Tanpa Jaminan',
+                                            data: dataDisetujuiTanpaJaminan
+                                        }
+                                    ],
+                                    chart: {
+                                        type: 'bar',
+                                        height: 350
+                                    },
+                                    plotOptions: {
+                                        bar: {
+                                            horizontal: false,
+                                            columnWidth: '55%',
+                                            endingShape: 'rounded'
+                                        },
+                                    },
+                                    dataLabels: {
+                                        enabled: false
+                                    },
+                                    stroke: {
+                                        show: true,
+                                        width: 2,
+                                        colors: ['transparent']
+                                    },
+                                    xaxis: {
+                                        categories: labels,
+                                    },
+                                    yaxis: {
+                                        title: {
+                                            text: '(data kelayakan)'
+                                        }
+                                    },
+                                    fill: {
+                                        opacity: 1
+                                    },
+                                    tooltip: {
+                                        y: {
+                                            formatter: function(val) {
+                                                return val;
+                                            }
+                                        }
+                                    }
+                                };
+
+                                const chart = new ApexCharts(document.querySelector("#columnChart"), options);
+                                chart.render();
+                            };
+
                             document.getElementById('grafikTahun').addEventListener('change', function() {
-                                // const tahun = 23;
                                 const tahun = this.value;
                                 const barApiUrl = `<?= site_url('dashboard/barChart/') ?>${tahun}`;
-                                // console.log(barApiUrl);
 
                                 fetch(barApiUrl)
                                     .then(response => response.json())
                                     .then(data => {
-                                        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                                        const dataLayak = labels.map(label => {
-                                            const monthIndex = labels.indexOf(label) + 1;
-                                            const monthData = data.find(d => parseInt(d.id_bulan) === monthIndex);
-                                            return monthData ? monthData.jumlah_layak : 0;
-                                        });
-
-                                        console.log(dataLayak);
-                                        const dataTidakLayak = labels.map(label => {
-                                            const monthIndex = labels.indexOf(label) + 1;
-                                            const monthData = data.find(d => parseInt(d.id_bulan) === monthIndex);
-                                            return monthData ? monthData.jumlah_tidak_layak : 0;
-                                        });
-
-                                        new ApexCharts(document.querySelector("#columnChart"), {
-                                            series: [{
-                                                name: 'Layak',
-                                                data: dataLayak
-                                            }, {
-                                                name: 'Tidak Layak',
-                                                data: dataTidakLayak
-                                            }],
-                                            chart: {
-                                                type: 'bar',
-                                                height: 350
-                                            },
-                                            plotOptions: {
-                                                bar: {
-                                                    horizontal: false,
-                                                    columnWidth: '55%',
-                                                    endingShape: 'rounded'
-                                                },
-                                            },
-                                            dataLabels: {
-                                                enabled: false
-                                            },
-                                            stroke: {
-                                                show: true,
-                                                width: 2,
-                                                colors: ['transparent']
-                                            },
-                                            xaxis: {
-                                                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                                            },
-                                            yaxis: {
-                                                title: {
-                                                    text: '(data kelayakan)'
-                                                }
-                                            },
-                                            fill: {
-                                                opacity: 1
-                                            },
-                                            tooltip: {
-                                                y: {
-                                                    formatter: function(val) {
-                                                        return val
-                                                    }
-                                                }
-                                            }
-                                        }).render();
+                                        updateChart(data);
                                     })
                                     .catch(error => console.error('Error fetching data:', error));
                             });
                         });
                     </script>
+
+
+
+
                     <!-- End Line Chart -->
 
                 </div>

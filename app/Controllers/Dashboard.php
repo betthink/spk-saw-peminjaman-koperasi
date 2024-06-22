@@ -30,6 +30,7 @@ class Dashboard extends BaseController
         $this->user = new UsersModel();
         $this->hasil = new HasilModel();
         $this->dataForChart = new HasilModel();
+        // $this->hasil = new HasilModel();
 
         // membuat range tahun untuk keperluan periode
         $thnAwal = 2022;
@@ -49,9 +50,11 @@ class Dashboard extends BaseController
             session()->setFlashdata('error', 'Anda harus login terlebih dahulu.');
             return redirect()->to('/login');
         }
+        $chartData = $this->hasil->getPieChart();
 
+        // dd($chartData);
         $tahun = $this->request->getVar('tahun');
-
+        $hasil = $this->hasil->getHasil();
         $data = [
             'title' => 'Dashboard',
             'bulan' => $this->hasil->getDataByTahun($tahun),
@@ -63,6 +66,7 @@ class Dashboard extends BaseController
             'countHasil' => $this->hasil->getCountHasilUnik(),
             'tahun' => $tahun,
             'dataTahun' => $this->dataTahun,
+            'hasils' => $hasil
         ];
         return view('index', $data);
     }
@@ -86,6 +90,7 @@ class Dashboard extends BaseController
     public function pieChart()
     {
         $chartData = $this->hasil->getPieChart();
+        $hasil = $this->hasil->getHasil();
         return $this->response->setJSON($chartData);
     }
 

@@ -15,21 +15,21 @@
 
         <!-- menu sidebar -->
         <li class="nav-item <?= $_SESSION['role'] == 1 ? '' : 'd-none' ?>">
-            <a class="nav-link collapsed" data-bs-target="#kriteria-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link collapsed" href="<?= base_url('/kriteria') ?>">
                 <i class="bi bi-journal-text"></i><span>Kriteria</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <?php ($title == "Data Kriteria" || $title == "Data Sub Kriteria") ? $show = "show" : $show = ""; ?>
             <ul id="kriteria-nav" class="nav-content collapse <?= $show ?>" data-bs-parent="#sidebar-nav">
-                <li>
+                <!-- <li>
                     <a href="<?= base_url('/kriteria') ?>" class="<?= $title == 'Data Kriteria' ? 'active' : '' ?>">
                         <i class="bi bi-circle"></i><span>Kriteria</span>
                     </a>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                     <a href="<?= base_url('/sub-kriteria') ?>" class="<?= $title == 'Data Sub Kriteria' ? 'active' : '' ?>">
                         <i class="bi bi-circle"></i><span>Sub Kriteria</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </li><!-- End Components Nav -->
 
@@ -65,12 +65,13 @@
         </li><!-- End Components Nav -->
 
         <li class="nav-heading mt-4">User</li>
-        <li class="nav-item <?= $_SESSION['role'] == 1 ? '' : 'd-none' ?>">
+        <!-- <li class="nav-item <?= $_SESSION['role'] == 1 ? '' : 'd-none' ?>">
             <a class="nav-link collapsed" href="<?= site_url('/users') ?>">
                 <i class="bi bi-person-plus-fill"></i>
                 <span>User</span>
             </a>
-        </li><!-- End F.A.Q Page Nav -->
+        </li> -->
+        <!-- End F.A.Q Page Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="<?= site_url('/profile-user') ?>">

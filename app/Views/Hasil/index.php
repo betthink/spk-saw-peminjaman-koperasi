@@ -40,7 +40,7 @@
                         <div class="<?= $bulan == null ? 'd-none' : '' ?>">
                                 <a class="btn btn-sm btn-success align-self-center" href="<?= base_url('/hasil/unduh/periode') ?>/<?= $bulan . '/' . $tahun ?>"><i class="fa fa-print" aria-hidden="true"></i> Export excel</a>
                                 <a class="btn btn-sm btn-primary align-self-center" href="<?= base_url('/hasil/cetak/periode') ?>/<?= $bulan . '/' . $tahun ?>"><i class="fa fa-print" aria-hidden="true"></i> Cetak</a>
-                                <a class="btn btn-sm btn-danger align-self-center <?= $_SESSION['role'] == 1 ? '' : 'd-none' ?>" href="<?= base_url('/hasil/hapus/periode') ?>/<?= $bulan . '/' . $tahun ?>" onclick="return confirm('Apakah yakin?')"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
+                                <!-- <a class="btn btn-sm btn-danger align-self-center <?= $_SESSION['role'] == 1 ? '' : 'd-none' ?>" href="<?= base_url('/hasil/hapus/periode') ?>/<?= $bulan . '/' . $tahun ?>" onclick="return confirm('Apakah yakin?')"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a> -->
                         </div>
                 </div>
                 <div class="card-body m-2">
